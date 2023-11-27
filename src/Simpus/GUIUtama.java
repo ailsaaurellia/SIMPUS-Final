@@ -5,6 +5,8 @@
  */
 package Simpus;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -35,6 +37,7 @@ public class GUIUtama extends javax.swing.JFrame {
     private void initComponents() {
 
         pnNavbar = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         pnSidebar = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pnMenu = new javax.swing.JPanel();
@@ -43,24 +46,30 @@ public class GUIUtama extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnNavbar.setBackground(new java.awt.Color(102, 221, 232));
-        pnNavbar.setPreferredSize(new java.awt.Dimension(998, 70));
+        pnNavbar.setBackground(new java.awt.Color(29, 176, 190));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambaran/Logosedang.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout pnNavbarLayout = new javax.swing.GroupLayout(pnNavbar);
         pnNavbar.setLayout(pnNavbarLayout);
         pnNavbarLayout.setHorizontalGroup(
             pnNavbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 998, Short.MAX_VALUE)
+            .addGroup(pnNavbarLayout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 684, Short.MAX_VALUE))
         );
         pnNavbarLayout.setVerticalGroup(
             pnNavbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70, Short.MAX_VALUE)
+            .addGroup(pnNavbarLayout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 5, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnNavbar, java.awt.BorderLayout.PAGE_START);
 
-        pnSidebar.setBackground(new java.awt.Color(255, 255, 255));
-        pnSidebar.setPreferredSize(new java.awt.Dimension(250, 543));
+        pnSidebar.setBackground(new java.awt.Color(29, 176, 190));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setBorder(null);
@@ -73,13 +82,13 @@ public class GUIUtama extends javax.swing.JFrame {
         pnSidebar.setLayout(pnSidebarLayout);
         pnSidebarLayout.setHorizontalGroup(
             pnSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addGroup(pnSidebarLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pnSidebarLayout.setVerticalGroup(
             pnSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnSidebarLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 38, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
         );
 
         getContentPane().add(pnSidebar, java.awt.BorderLayout.LINE_START);
@@ -143,6 +152,7 @@ public class GUIUtama extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnContent;
     private javax.swing.JPanel pnMenu;
@@ -152,27 +162,47 @@ public class GUIUtama extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void execute() {
-        ImageIcon iconHome          = new ImageIcon(getClass().getResource("/Gambaran/Home.png"));
-        ImageIcon iconData          = new ImageIcon(getClass().getResource("/Gambaran/Data.png"));
-        ImageIcon iconBuku          = new ImageIcon(getClass().getResource("/Gambaran/Book.png"));
-        ImageIcon iconSkripsi       = new ImageIcon(getClass().getResource("/Gambaran/iconSkripsi.png"));
-        ImageIcon iconTransaksi     = new ImageIcon(getClass().getResource("/Gambaran/Transaksi.png"));
-        ImageIcon iconPinjam        = new ImageIcon(getClass().getResource("/Gambaran/Peminjaman.png"));
-        ImageIcon iconBalik         = new ImageIcon(getClass().getResource("/Gambaran/Pengembalian.png"));
+        ImageIcon iconHome = new ImageIcon(getClass().getResource("/Gambaran/Home.png"));
+        ImageIcon iconData = new ImageIcon(getClass().getResource("/Gambaran/Data.png"));
+        ImageIcon iconBuku = new ImageIcon(getClass().getResource("/Gambaran/Book.png"));
+        ImageIcon iconSkripsi = new ImageIcon(getClass().getResource("/Gambaran/iconSkripsi.png"));
+        ImageIcon iconTransaksi = new ImageIcon(getClass().getResource("/Gambaran/Transaksi.png"));
+        ImageIcon iconPinjam = new ImageIcon(getClass().getResource("/Gambaran/Peminjaman.png"));
+        ImageIcon iconBalik = new ImageIcon(getClass().getResource("/Gambaran/Pengembalian.png"));
 
-        MenuItem menuBuku = new MenuItem(null, true, iconBuku, "Data Buku", null);
+        MenuItem menuBuku = new MenuItem(null, true, iconBuku, "Data Buku", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pnUtama.removeAll();
+                pnUtama.add(new FormBuku());
+                pnUtama.repaint();
+                pnUtama.revalidate();
+
+            }
+        });
+
         MenuItem menuSkripsi = new MenuItem(null, true, iconSkripsi, "Data Skripsi", null);
+        MenuItem menuKategori = new MenuItem(null, true, iconSkripsi, "Kategori", null);
 
         MenuItem menuPinjam = new MenuItem(null, true, iconPinjam, "Peminjaman", null);
         MenuItem menuBalik = new MenuItem(null, true, iconBalik, "Pengembalian", null);
 
-        MenuItem menuHome = new MenuItem(iconHome, false, null, "Home", null);
-        MenuItem menuData = new MenuItem(iconData, false, null, "Data", null, menuBuku, menuSkripsi );
-        MenuItem menuTransaksi = new MenuItem(iconTransaksi, false, null, "Transaksi", null, menuPinjam, menuBalik);
+        MenuItem menuHome = new MenuItem(iconHome, false, null, "Home", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pnUtama.removeAll();
+                pnUtama.add(new Homepage());
+                pnUtama.repaint();
+                pnUtama.revalidate();
+            }
+         });
         
-        addMenu(menuHome,menuData,menuTransaksi);
-        
-    }
+        MenuItem menuData = new MenuItem(iconData, false, null, "Data", null, menuBuku, menuSkripsi,menuKategori);
+            MenuItem menuTransaksi = new MenuItem(iconTransaksi, false, null, "Transaksi", null, menuPinjam, menuBalik);
+
+            addMenu(menuHome, menuData, menuTransaksi);
+
+        }
 
     private void addMenu(MenuItem... menu) {
         for (int i = 0; i < menu.length; i++) {
@@ -186,7 +216,3 @@ public class GUIUtama extends javax.swing.JFrame {
         pnMenu.revalidate();
     }
 }
-
-   
-    
-

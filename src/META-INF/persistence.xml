@@ -7,6 +7,8 @@
     <class>persisten.Skripsi</class>
     <class>persisten.Login</class>
     <class>persisten.Petugas</class>
+    <class>persisten.Kategori</class>
+    <class>persisten.KategorBuku</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Simpus"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

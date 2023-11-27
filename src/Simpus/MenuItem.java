@@ -43,8 +43,8 @@ public class MenuItem extends javax.swing.JPanel {
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
         this.setMinimumSize(new Dimension(Integer.MAX_VALUE, 45));
         for (int i = 0; i < subMenu.length; i++) {
-            this.subMenu.add(subMenu[1]);
-            subMenu[1].setVisible(false);
+            this.subMenu.add(subMenu[i]);
+            subMenu[i].setVisible(false);
         }
 
     }
@@ -63,18 +63,19 @@ public class MenuItem extends javax.swing.JPanel {
         jLabelMenu = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(100, 50));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 formMousePressed(evt);
             }
         });
 
-        jLabelIcon.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jLabelIconsub.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabelMenu.setBackground(new java.awt.Color(0, 0, 153));
-        jLabelMenu.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabelMenu.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabelMenu.setText("Menu Item");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -83,23 +84,22 @@ public class MenuItem extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelIconsub, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelIconsub, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(jLabelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabelIconsub, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                        .addComponent(jLabelIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelIconsub, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

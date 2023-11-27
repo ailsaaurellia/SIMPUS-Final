@@ -62,14 +62,15 @@ public class GUIBuku extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTableBuku.getModel();
         model.setRowCount(0);
         for (Buku data : results) {
-            Object[] baris = new Object[7];
-            baris[0] = data.getIsbn();
-            baris[1] = data.getJudul();
-            baris[2] = data.getSubjudul();
-            baris[3] = data.getPengarang();
-            baris[4] = data.getPenerbit();
-            baris[5] = data.getTahun();
-            baris[6] = data.getHalaman();
+            Object[] baris = new Object[8];
+            baris[0] = data.getIdbuku();
+            baris[1] = data.getIsbn();
+            baris[2] = data.getJudul();
+            baris[3] = data.getKategori();
+            baris[4] = data.getPengarang();
+            baris[5] = data.getPenerbit();
+            baris[6] = data.getTahun();
+            baris[7] = data.getHalaman();
             model.addRow(baris);
         }
         entityManager.getTransaction().commit();
@@ -77,7 +78,8 @@ public class GUIBuku extends javax.swing.JFrame {
     }
 
     private void kosongkan_form() {
-        jTextIsbn.setEditable(true);
+        jTextId.setEditable(true);
+        jTextId.setText("");
         jTextIsbn.setText("");
         jTextJudul.setText("");
         jTextSubjudul.setText("");
@@ -121,6 +123,7 @@ public class GUIBuku extends javax.swing.JFrame {
         jComboCari = new javax.swing.JComboBox<>();
         jTextSearch = new javax.swing.JTextField();
         jTextJudul = new javax.swing.JTextField();
+        jTextId = new javax.swing.JTextField();
         jTextIsbn = new javax.swing.JTextField();
         jTextSubjudul = new javax.swing.JTextField();
         jTextPengarang = new javax.swing.JTextField();
@@ -135,16 +138,16 @@ public class GUIBuku extends javax.swing.JFrame {
 
         jTableBuku.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ISBN", "Judul", "Subjudul", "Pengarang", "Penerbit", "Tahun", "Jumlah Halaman"
+                "ID", "ISBN", "Judul", "Kategori", "Pengarang", "Penerbit", "Tahun", "Jumlah Halaman"
             }
         ));
         jTableBuku.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -233,6 +236,7 @@ public class GUIBuku extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 200, 30));
+        getContentPane().add(jTextId, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 400, 210, -1));
 
         jTextIsbn.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jTextIsbn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -315,9 +319,10 @@ public class GUIBuku extends javax.swing.JFrame {
 
     private void jButtonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTambahActionPerformed
         // TODO add your handling code here:
-        String isbn = jTextIsbn.getText().trim();
+        String id = jTextId.getText().trim();
+        String isbn = jTextIsbn.getText();
         String judul = jTextJudul.getText();
-        String subjudul = jTextSubjudul.getText();
+        String kategori = jTextSubjudul.getText();
         String pengarang = jTextPengarang.getText();
         String penerbit = jTextPenerbit.getText();
         String tahun = jTextTahun.getText();
@@ -327,9 +332,10 @@ public class GUIBuku extends javax.swing.JFrame {
         EntityManager entityManager = Persistence.createEntityManagerFactory("UASPBOPU").createEntityManager();
         entityManager.getTransaction().begin();
         Buku b = new Buku();
+        b.setIdbuku(id);
         b.setIsbn(isbn);
         b.setJudul(judul);
-        b.setSubjudul(subjudul);
+        b.setKategori(kategori);
         b.setPengarang(pengarang);
         b.setPenerbit(penerbit);
         b.setTahun(tahun);
@@ -338,6 +344,7 @@ public class GUIBuku extends javax.swing.JFrame {
         entityManager.getTransaction().commit();
         // akhir persistence
 
+        jTextId.setText("");
         jTextIsbn.setText("");
         jTextJudul.setText("");
         jTextSubjudul.setText("");
@@ -350,9 +357,9 @@ public class GUIBuku extends javax.swing.JFrame {
         model.setRowCount(0);
         tampil();
 
-        if (!isbn.isEmpty()) {
+        if (!id.isEmpty()) {
             // TODO add your handling code here:
-            if (!isbn.isEmpty()) {
+            if (!id.isEmpty()) {
                 this.peringatan("Simpan Berhasil");
             } else {
                 this.peringatan("Simpan Gagal");
@@ -365,9 +372,10 @@ public class GUIBuku extends javax.swing.JFrame {
 
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
         // TODO add your handling code here:
-        String isbn = jTextIsbn.getText().trim();
+         String id = jTextId.getText().trim();
+        String isbn = jTextIsbn.getText();
         String judul = jTextJudul.getText();
-        String subjudul = jTextSubjudul.getText();
+        String kategori = jTextSubjudul.getText();
         String pengarang = jTextPengarang.getText();
         String penerbit = jTextPenerbit.getText();
         String tahun = jTextTahun.getText();
@@ -377,9 +385,10 @@ public class GUIBuku extends javax.swing.JFrame {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("UASPBOPU");
         EntityManager em = emf.createEntityManager();
         Buku b = new Buku();
+       b.setIdbuku(id);
         b.setIsbn(isbn);
         b.setJudul(judul);
-        b.setSubjudul(subjudul);
+        b.setKategori(kategori);
         b.setPengarang(pengarang);
         b.setPenerbit(penerbit);
         b.setTahun(tahun);
@@ -390,13 +399,14 @@ public class GUIBuku extends javax.swing.JFrame {
         em.getTransaction().commit();
         // akhir persistence
 
-        jTextIsbn.setText(isbn);
-        jTextJudul.setText(judul);
-        jTextSubjudul.setText(subjudul);
-        jTextPengarang.setText(pengarang);
-        jTextPenerbit.setText(penerbit);
-        jTextTahun.setText(tahun);
-        jTextHalaman.setText(jumlah);
+        jTextId.setText("");
+        jTextIsbn.setText("");
+        jTextJudul.setText("");
+        jTextSubjudul.setText("");
+        jTextPengarang.setText("");
+        jTextPenerbit.setText("");
+        jTextTahun.setText("");
+        jTextHalaman.setText("");
 
         DefaultTableModel model = (DefaultTableModel) jTableBuku.getModel();
         model.setRowCount(0);
@@ -411,27 +421,27 @@ public class GUIBuku extends javax.swing.JFrame {
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         // TODO add your handling code here:
-        String isbn = jTextIsbn.getText().trim();
+        String id = jTextId.getText().trim();
 
         // awal persistence
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("UASPBOPU");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
-        Buku b = em.find(Buku.class, isbn);
+        Buku b = em.find(Buku.class, id);
 
         em.remove(b);
         em.getTransaction().commit();
         // akhir persistence
 
-        jTextIsbn.setText("");
+        jTextId.setText("");
         kosongkan_form();
         DefaultTableModel model = (DefaultTableModel) jTableBuku.getModel();
         model.setRowCount(0);
         tampil();
 
-        if (!isbn.isEmpty()) {
-            if (!isbn.isEmpty()) {
+        if (!id.isEmpty()) {
+            if (!id.isEmpty()) {
                 this.peringatan("Hapus data Berhasil");
             } else {
                 this.peringatan("Hapus data Gagal");
@@ -463,7 +473,7 @@ public class GUIBuku extends javax.swing.JFrame {
                     queryString += "LOWER(b.judul) LIKE LOWER(:searchTerm)";
                     break;
                 case "subjudul":
-                    queryString += "LOWER(b.subjudul) LIKE LOWER(:searchTerm)";
+                    queryString += "LOWER(b.kategori) LIKE LOWER(:searchTerm)";
                     break;
                 case "pengarang":
                     queryString += "LOWER(b.pengarang) LIKE LOWER(:searchTerm)";
@@ -477,7 +487,7 @@ public class GUIBuku extends javax.swing.JFrame {
                 default:
                     queryString += "LOWER(b.isbn) LIKE LOWER(:searchTerm)"
                             + " OR LOWER(b.judul) LIKE LOWER(:searchTerm)"
-                            + " OR LOWER(b.subjudul) LIKE LOWER(:searchTerm)"
+                            + " OR LOWER(b.kategori) LIKE LOWER(:searchTerm)"
                             + " OR LOWER(b.pengarang) LIKE LOWER(:searchTerm)"
                             + " OR LOWER(b.penerbit) LIKE LOWER(:searchTerm)"
                             + " OR LOWER(b.tahun) LIKE LOWER(:searchTerm)";
@@ -512,7 +522,7 @@ public class GUIBuku extends javax.swing.JFrame {
                     Object[] rowData = {
                         result.getIsbn(),
                         result.getJudul(),
-                        result.getSubjudul(),
+                        result.getKategori(),
                         result.getPengarang(),
                         result.getPenerbit(),
                         result.getTahun(),
@@ -563,26 +573,29 @@ public class GUIBuku extends javax.swing.JFrame {
     private void jTableBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableBukuMouseClicked
         // TODO add your handling code here:
         int baris = jTableBuku.rowAtPoint(evt.getPoint());
+        
+        String id = jTableBuku.getValueAt(baris, 0).toString();
+        jTextId.setText(id);
 
-        String isbn = jTableBuku.getValueAt(baris, 0).toString();
+        String isbn = jTableBuku.getValueAt(baris, 1).toString();
         jTextIsbn.setText(isbn);
 
-        String judul = jTableBuku.getValueAt(baris, 1).toString();
+        String judul = jTableBuku.getValueAt(baris, 2).toString();
         jTextJudul.setText(judul);
 
-        String subjudul = jTableBuku.getValueAt(baris, 2).toString();
+        String subjudul = jTableBuku.getValueAt(baris, 3).toString();
         jTextSubjudul.setText(subjudul);
 
-        String pengarang = jTableBuku.getValueAt(baris, 3).toString();
+        String pengarang = jTableBuku.getValueAt(baris, 4).toString();
         jTextPengarang.setText(pengarang);
 
-        String penerbit = jTableBuku.getValueAt(baris, 4).toString();
+        String penerbit = jTableBuku.getValueAt(baris, 5).toString();
         jTextPenerbit.setText(penerbit);
 
-        String tahun = jTableBuku.getValueAt(baris, 5).toString();
+        String tahun = jTableBuku.getValueAt(baris, 6).toString();
         jTextTahun.setText(tahun);
 
-        String jumlah = jTableBuku.getValueAt(baris, 6).toString();
+        String jumlah = jTableBuku.getValueAt(baris, 7).toString();
         jTextHalaman.setText(jumlah);
 
     }//GEN-LAST:event_jTableBukuMouseClicked
@@ -661,7 +674,7 @@ public class GUIBuku extends javax.swing.JFrame {
                 Object[] rowData = {
                     result.getIsbn(),
                     result.getJudul(),
-                    result.getSubjudul(),
+                    result.getKategori(),
                     result.getPengarang(),
                     result.getPenerbit(),
                     result.getTahun(),
@@ -734,6 +747,7 @@ public class GUIBuku extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableBuku;
     private javax.swing.JTextField jTextHalaman;
+    private javax.swing.JTextField jTextId;
     private javax.swing.JTextField jTextIsbn;
     private javax.swing.JTextField jTextJudul;
     private javax.swing.JTextField jTextPenerbit;
