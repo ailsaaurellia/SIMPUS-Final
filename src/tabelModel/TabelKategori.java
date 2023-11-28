@@ -3,31 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package TableModel;
+package tabelModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import persisten.Buku;
+import persisten.Kategori;
 
 /**
  *
  * @author Ailsa
  */
-public class TabelBuku extends AbstractTableModel {
+public class TabelKategori extends AbstractTableModel {
 
-    private List<Buku> list = new ArrayList<>();
-    private final String[] columnNames = {"No", "ID Buku", "ISBN", "Judul", "Kategori", 
-        "Pengarang", "Penerbit", "Tahun", "Halaman"};
+    private List<Kategori> list = new ArrayList<>();
+    private final String[] columnNames = {"No", "ID Kategori", "Kategori"};
 
-    public void tambahData(Buku mod) {
+    public void tambahData(Kategori mod) {
         list.add(mod);
         fireTableRowsInserted(list.size() - 1, list.size() - 1);
         JOptionPane.showMessageDialog(null, "Data Berhasil Ditambahkan");
     }
 
-    public void perbaruiData(int row, Buku mod) {
+    public void perbaruiData(int row, Kategori mod) {
         list.add(row, mod);
         fireTableDataChanged();
         JOptionPane.showMessageDialog(null, "Data Berhasil Diperbarui");
@@ -44,18 +44,18 @@ public class TabelBuku extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-    public void setData(List<Buku> list) {
+    public void setData(List<Kategori> list) {
         clear();
         this.list.addAll(list);
         fireTableDataChanged();
     }
 
-    public void setData(int index, Buku mod) {
+    public void setData(int index, Kategori mod) {
         list.set(index, mod);
         fireTableRowsUpdated(index, index);
     }
 
-    public Buku getData(int index) {
+    public Kategori getData(int index) {
         return list.get(index);
     }
 
@@ -76,22 +76,9 @@ public class TabelBuku extends AbstractTableModel {
         } else {
             switch (columnIndex - 1) {
                 case 0:
-                    return list.get(rowIndex).getIdbuku();
+                    return list.get(rowIndex).getIdkategori();
                 case 1:
-                    return list.get(rowIndex).getIsbn();
-                case 2:
-                    return list.get(rowIndex).getJudul();
-                case 3:
                     return list.get(rowIndex).getKategori();
-                case 4:
-                    return list.get(rowIndex).getPengarang();
-                case 5:
-                    return list.get(rowIndex).getPenerbit();
-                case 6:
-                    return list.get(rowIndex).getTahun();
-                case 7:
-                    return list.get(rowIndex).getHalaman();
-
                 default:
                     return null;
 
@@ -99,7 +86,7 @@ public class TabelBuku extends AbstractTableModel {
         }
     }
 
-    @Override
+   @Override
     public String getColumnName(int column) {
         if (column == 0) {
             return "    " + columnNames[column];

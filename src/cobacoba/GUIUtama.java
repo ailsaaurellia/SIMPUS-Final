@@ -5,8 +5,8 @@
  */
 package cobacoba;
 
-import Simpus.FormBuku;
-import Simpus.FormDashboard;
+import simpus.FormBuku;
+import simpus.FormDashboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;

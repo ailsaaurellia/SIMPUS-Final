@@ -5,7 +5,7 @@
  */
 package persisten;
 
-import Simpus.GUILogin;
+import simpus.GUILogin;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
