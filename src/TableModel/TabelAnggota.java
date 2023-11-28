@@ -9,59 +9,60 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
-import persisten.Buku;
+import persisten.Anggota;
+
+
 
 /**
  *
  * @author Ailsa
  */
-public class TabelBuku extends AbstractTableModel {
+public class TabelAnggota extends AbstractTableModel {
 
-    private List<Buku> list = new ArrayList<>();
-    private final String[] columnNames = {"No", "ID Buku", "ISBN", "Judul", "Kategori", 
-        "Pengarang", "Penerbit", "Tahun", "Halaman"};
+    private List<Anggota> listAnggota = new ArrayList<>();
+    private final String[] columnNames = {"No", "ID Anggota", "Nama", "NIM", "Fakultas", "Program Studi", 
+        "Angkatan", "Alamat", "Telepon", "Email", "Jenis Kelamin"};
 
-    public void tambahData(Buku mod) {
-        list.add(mod);
-        fireTableRowsInserted(list.size() - 1, list.size() - 1);
+    public void tambahData(Anggota mod) {
+        listAnggota.add(mod);
+        fireTableRowsInserted(listAnggota.size() - 1, listAnggota.size() - 1);
         JOptionPane.showMessageDialog(null, "Data Berhasil Ditambahkan");
     }
 
-    public void perbaruiData(int row, Buku mod) {
-        list.add(row, mod);
+    public void perbaruiData(int row, Anggota mod) {
+        listAnggota.add(row, mod);
         fireTableDataChanged();
         JOptionPane.showMessageDialog(null, "Data Berhasil Diperbarui");
     }
 
     public void hapusData(int index) {
-        list.remove(index);
+        listAnggota.remove(index);
         fireTableRowsDeleted(index, index);
         JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
     }
-
     public void clear() {
-        list.clear();
+        listAnggota.clear();
         fireTableDataChanged();
     }
 
-    public void setData(List<Buku> list) {
+    public void setData(List<Anggota> list) {
         clear();
-        this.list.addAll(list);
+        this.listAnggota.addAll(list);
         fireTableDataChanged();
     }
 
-    public void setData(int index, Buku mod) {
-        list.set(index, mod);
+    public void setData(int index, Anggota mod) {
+       listAnggota.set(index, mod);
         fireTableRowsUpdated(index, index);
     }
 
-    public Buku getData(int index) {
-        return list.get(index);
+    public Anggota getData(int index) {
+        return listAnggota.get(index);
     }
 
     @Override
     public int getRowCount() {
-        return list.size();
+        return listAnggota.size();
     }
 
     @Override
@@ -76,22 +77,25 @@ public class TabelBuku extends AbstractTableModel {
         } else {
             switch (columnIndex - 1) {
                 case 0:
-                    return list.get(rowIndex).getIdbuku();
+                    return listAnggota.get(rowIndex).getIdAnggota();
                 case 1:
-                    return list.get(rowIndex).getIsbn();
+                    return listAnggota.get(rowIndex).getNama();
                 case 2:
-                    return list.get(rowIndex).getJudul();
+                    return listAnggota.get(rowIndex).getNim();
                 case 3:
-                    return list.get(rowIndex).getKategori();
+                    return listAnggota.get(rowIndex).getFakultas();
                 case 4:
-                    return list.get(rowIndex).getPengarang();
+                    return listAnggota.get(rowIndex).getProgramStudi();
                 case 5:
-                    return list.get(rowIndex).getPenerbit();
+                    return listAnggota.get(rowIndex).getAngkatan();
                 case 6:
-                    return list.get(rowIndex).getTahun();
+                    return listAnggota.get(rowIndex).getAlamat();
                 case 7:
-                    return list.get(rowIndex).getHalaman();
-
+                    return listAnggota.get(rowIndex).getTelephone();
+                case 8:
+                    return listAnggota.get(rowIndex).getEmail();
+                case 9:
+                    return listAnggota.get(rowIndex).getJenisKelamin();
                 default:
                     return null;
 

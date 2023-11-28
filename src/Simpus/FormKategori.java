@@ -6,8 +6,11 @@
 package Simpus;
 
 import Dao.daoBuku;
+import Dao.daoKategori;
 import Interface.IFBuku;
+import Interface.IFKategori;
 import TableModel.TabelBuku;
+import TableModel.TabelKategori;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -22,17 +25,18 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import persisten.Buku;
+import persisten.Kategori;
 
 /**
  *
  * @author Ailsa
  */
-public class FormBuku extends javax.swing.JPanel {
+public class FormKategori extends javax.swing.JPanel {
 
-    private IFBuku servis = new daoBuku();
-    private TabelBuku tblModel = new TabelBuku();
+    private IFKategori servis = new daoKategori();
+    private TabelKategori tblModel = new TabelKategori();
 
-    public FormBuku() {
+    public FormKategori() {
         initComponents();
 
         jTableBuku.setModel(tblModel);
@@ -56,6 +60,12 @@ public class FormBuku extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btTambah = new javax.swing.JButton();
         btHapus = new javax.swing.JButton();
+        dataBuku1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableBuku1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        btTambah1 = new javax.swing.JButton();
+        btHapus1 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(983, 638));
         setLayout(new java.awt.CardLayout());
@@ -82,7 +92,7 @@ public class FormBuku extends javax.swing.JPanel {
 
         jLabel1.setBackground(new java.awt.Color(255, 204, 204));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Data Buku");
+        jLabel1.setText("Data Kategori Buku");
 
         btTambah.setText("Tambah");
         btTambah.addActionListener(new java.awt.event.ActionListener() {
@@ -127,6 +137,69 @@ public class FormBuku extends javax.swing.JPanel {
 
         mainPanel.add(dataBuku, "card2");
 
+        dataBuku1.setBackground(new java.awt.Color(255, 255, 255));
+        dataBuku1.setPreferredSize(new java.awt.Dimension(983, 638));
+
+        jTableBuku1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTableBuku1);
+
+        jLabel2.setBackground(new java.awt.Color(255, 204, 204));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel2.setText("Data Buku");
+
+        btTambah1.setText("Tambah");
+        btTambah1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btTambah1ActionPerformed(evt);
+            }
+        });
+
+        btHapus1.setText("Hapus");
+
+        javax.swing.GroupLayout dataBuku1Layout = new javax.swing.GroupLayout(dataBuku1);
+        dataBuku1.setLayout(dataBuku1Layout);
+        dataBuku1Layout.setHorizontalGroup(
+            dataBuku1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dataBuku1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(dataBuku1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
+                    .addGroup(dataBuku1Layout.createSequentialGroup()
+                        .addGroup(dataBuku1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(dataBuku1Layout.createSequentialGroup()
+                                .addComponent(btTambah1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btHapus1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(20, 20, 20))
+        );
+        dataBuku1Layout.setVerticalGroup(
+            dataBuku1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dataBuku1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(dataBuku1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btHapus1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btTambah1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
+                .addGap(40, 40, 40))
+        );
+
+        mainPanel.add(dataBuku1, "card2");
+
         add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
@@ -147,21 +220,31 @@ public class FormBuku extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btTambahActionPerformed
 
+    private void btTambah1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTambah1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btTambah1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btHapus;
+    private javax.swing.JButton btHapus1;
     private javax.swing.JButton btTambah;
+    private javax.swing.JButton btTambah1;
     private javax.swing.JPanel dataBuku;
+    private javax.swing.JPanel dataBuku1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableBuku;
+    private javax.swing.JTable jTableBuku1;
     private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
 
     private void loadData() {
         //btHapus.setVisible(false);
         //btBatal.setVisible(false);
-        List<Buku> List = servis.ambilData();
+        List<Kategori> List = servis.ambilData();
         tblModel.setData(List);
 
     }

@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Simpus;
+package cobacoba;
 
+import Simpus.FormBuku;
+import Simpus.FormDashboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,7 +24,6 @@ public class GUIUtama extends javax.swing.JFrame {
      */
     public GUIUtama() {
         initComponents();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         execute();
     }
@@ -36,82 +37,67 @@ public class GUIUtama extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnNavbar = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         pnSidebar = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
         pnMenu = new javax.swing.JPanel();
         pnContent = new javax.swing.JPanel();
         pnUtama = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(1366, 768));
 
-        pnNavbar.setBackground(new java.awt.Color(29, 176, 190));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambaran/Logosedang.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-
-        javax.swing.GroupLayout pnNavbarLayout = new javax.swing.GroupLayout(pnNavbar);
-        pnNavbar.setLayout(pnNavbarLayout);
-        pnNavbarLayout.setHorizontalGroup(
-            pnNavbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnNavbarLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 684, Short.MAX_VALUE))
-        );
-        pnNavbarLayout.setVerticalGroup(
-            pnNavbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnNavbarLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 5, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(pnNavbar, java.awt.BorderLayout.PAGE_START);
-
-        pnSidebar.setBackground(new java.awt.Color(29, 176, 190));
-
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setBorder(null);
+        pnSidebar.setBackground(new java.awt.Color(255, 255, 255));
 
         pnMenu.setBackground(new java.awt.Color(255, 255, 255));
+        pnMenu.setPreferredSize(new java.awt.Dimension(100, 70));
         pnMenu.setLayout(new javax.swing.BoxLayout(pnMenu, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane1.setViewportView(pnMenu);
 
         javax.swing.GroupLayout pnSidebarLayout = new javax.swing.GroupLayout(pnSidebar);
         pnSidebar.setLayout(pnSidebarLayout);
         pnSidebarLayout.setHorizontalGroup(
             pnSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnSidebarLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(pnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 198, Short.MAX_VALUE))
         );
         pnSidebarLayout.setVerticalGroup(
             pnSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
+            .addGroup(pnSidebarLayout.createSequentialGroup()
+                .addComponent(pnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 182, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnSidebar, java.awt.BorderLayout.LINE_START);
 
-        pnContent.setBackground(new java.awt.Color(255, 255, 255));
+        pnContent.setBackground(new java.awt.Color(29, 176, 190));
 
         pnUtama.setBackground(new java.awt.Color(255, 255, 255));
         pnUtama.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(null);
+        pnUtama.add(jScrollPane1, java.awt.BorderLayout.PAGE_START);
 
         javax.swing.GroupLayout pnContentLayout = new javax.swing.GroupLayout(pnContent);
         pnContent.setLayout(pnContentLayout);
         pnContentLayout.setHorizontalGroup(
             pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnUtama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnContentLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(pnUtama, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
+                .addGap(333, 333, 333))
         );
         pnContentLayout.setVerticalGroup(
             pnContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnUtama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnContentLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(pnUtama, javax.swing.GroupLayout.PREFERRED_SIZE, 718, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnContent, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(1016, 660));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -141,6 +127,7 @@ public class GUIUtama extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(GUIUtama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -152,11 +139,9 @@ public class GUIUtama extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnContent;
     private javax.swing.JPanel pnMenu;
-    private javax.swing.JPanel pnNavbar;
     private javax.swing.JPanel pnSidebar;
     private javax.swing.JPanel pnUtama;
     // End of variables declaration//GEN-END:variables
@@ -191,7 +176,7 @@ public class GUIUtama extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pnUtama.removeAll();
-                pnUtama.add(new Homepage());
+                pnUtama.add(new FormDashboard());
                 pnUtama.repaint();
                 pnUtama.revalidate();
             }
