@@ -21,24 +21,6 @@ public class TabelKategori extends AbstractTableModel {
     private List<Kategori> list = new ArrayList<>();
     private final String[] columnNames = {"No", "ID Kategori", "Kategori"};
 
-    public void tambahData(Kategori mod) {
-        list.add(mod);
-        fireTableRowsInserted(list.size() - 1, list.size() - 1);
-        JOptionPane.showMessageDialog(null, "Data Berhasil Ditambahkan");
-    }
-
-    public void perbaruiData(int row, Kategori mod) {
-        list.add(row, mod);
-        fireTableDataChanged();
-        JOptionPane.showMessageDialog(null, "Data Berhasil Diperbarui");
-    }
-
-    public void hapusData(int index) {
-        list.remove(index);
-        fireTableRowsDeleted(index, index);
-        JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
-    }
-
     public void clear() {
         list.clear();
         fireTableDataChanged();
@@ -76,7 +58,7 @@ public class TabelKategori extends AbstractTableModel {
         } else {
             switch (columnIndex - 1) {
                 case 0:
-                    return list.get(rowIndex).getIdkategori();
+                    return list.get(rowIndex).getIdKategori();
                 case 1:
                     return list.get(rowIndex).getKategori();
                 default:

@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,33 +29,38 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Kategori.findAll", query = "SELECT k FROM Kategori k")
-    , @NamedQuery(name = "Kategori.findByIdkategori", query = "SELECT k FROM Kategori k WHERE k.idkategori = :idkategori")
+    , @NamedQuery(name = "Kategori.findByIdKategori", query = "SELECT k FROM Kategori k WHERE k.idKategori = :idKategori")
     , @NamedQuery(name = "Kategori.findByKategori", query = "SELECT k FROM Kategori k WHERE k.kategori = :kategori")})
 public class Kategori implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "idkategori")
-    private String idkategori;
+    @Column(name = "id_kategori")
+    private String idKategori;
     @Column(name = "kategori")
     private String kategori;
+    @JoinTable(name = "kategori_skripsi", joinColumns = {
+        @JoinColumn(name = "id_kategori", referencedColumnName = "id_kategori")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_skripsi", referencedColumnName = "id_skripsi")})
+    @ManyToMany
+    private Collection<Skripsi> skripsiCollection;
     @ManyToMany(mappedBy = "kategoriCollection")
     private Collection<Buku> bukuCollection;
 
     public Kategori() {
     }
 
-    public Kategori(String idkategori) {
-        this.idkategori = idkategori;
+    public Kategori(String idKategori) {
+        this.idKategori = idKategori;
     }
 
-    public String getIdkategori() {
-        return idkategori;
+    public String getIdKategori() {
+        return idKategori;
     }
 
-    public void setIdkategori(String idkategori) {
-        this.idkategori = idkategori;
+    public void setIdKategori(String idKategori) {
+        this.idKategori = idKategori;
     }
 
     public String getKategori() {
@@ -62,6 +69,15 @@ public class Kategori implements Serializable {
 
     public void setKategori(String kategori) {
         this.kategori = kategori;
+    }
+
+    @XmlTransient
+    public Collection<Skripsi> getSkripsiCollection() {
+        return skripsiCollection;
+    }
+
+    public void setSkripsiCollection(Collection<Skripsi> skripsiCollection) {
+        this.skripsiCollection = skripsiCollection;
     }
 
     @XmlTransient
@@ -76,7 +92,7 @@ public class Kategori implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idkategori != null ? idkategori.hashCode() : 0);
+        hash += (idKategori != null ? idKategori.hashCode() : 0);
         return hash;
     }
 
@@ -87,7 +103,7 @@ public class Kategori implements Serializable {
             return false;
         }
         Kategori other = (Kategori) object;
-        if ((this.idkategori == null && other.idkategori != null) || (this.idkategori != null && !this.idkategori.equals(other.idkategori))) {
+        if ((this.idKategori == null && other.idKategori != null) || (this.idKategori != null && !this.idKategori.equals(other.idKategori))) {
             return false;
         }
         return true;
@@ -95,7 +111,7 @@ public class Kategori implements Serializable {
 
     @Override
     public String toString() {
-        return "persisten.Kategori[ idkategori=" + idkategori + " ]";
+        return "persisten.Kategori[ idKategori=" + idKategori + " ]";
     }
     
 }

@@ -29,10 +29,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Buku.findAll", query = "SELECT b FROM Buku b")
-    , @NamedQuery(name = "Buku.findByIdbuku", query = "SELECT b FROM Buku b WHERE b.idbuku = :idbuku")
+    , @NamedQuery(name = "Buku.findByIdBuku", query = "SELECT b FROM Buku b WHERE b.idBuku = :idBuku")
     , @NamedQuery(name = "Buku.findByIsbn", query = "SELECT b FROM Buku b WHERE b.isbn = :isbn")
     , @NamedQuery(name = "Buku.findByJudul", query = "SELECT b FROM Buku b WHERE b.judul = :judul")
-    , @NamedQuery(name = "Buku.findByKategori", query = "SELECT b FROM Buku b WHERE b.kategori = :kategori")
+    , @NamedQuery(name = "Buku.findBySubjudul", query = "SELECT b FROM Buku b WHERE b.subjudul = :subjudul")
     , @NamedQuery(name = "Buku.findByPengarang", query = "SELECT b FROM Buku b WHERE b.pengarang = :pengarang")
     , @NamedQuery(name = "Buku.findByPenerbit", query = "SELECT b FROM Buku b WHERE b.penerbit = :penerbit")
     , @NamedQuery(name = "Buku.findByTahun", query = "SELECT b FROM Buku b WHERE b.tahun = :tahun")
@@ -42,14 +42,14 @@ public class Buku implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "idbuku")
-    private String idbuku;
+    @Column(name = "id_buku")
+    private String idBuku;
     @Column(name = "isbn")
     private String isbn;
     @Column(name = "judul")
     private String judul;
-    @Column(name = "kategori")
-    private String kategori;
+    @Column(name = "subjudul")
+    private String subjudul;
     @Column(name = "pengarang")
     private String pengarang;
     @Column(name = "penerbit")
@@ -59,24 +59,24 @@ public class Buku implements Serializable {
     @Column(name = "halaman")
     private String halaman;
     @JoinTable(name = "kategori_buku", joinColumns = {
-        @JoinColumn(name = "idbuku", referencedColumnName = "idbuku")}, inverseJoinColumns = {
-        @JoinColumn(name = "idkategori", referencedColumnName = "idkategori")})
+        @JoinColumn(name = "id_buku", referencedColumnName = "id_buku")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_kategori", referencedColumnName = "id_kategori")})
     @ManyToMany
     private Collection<Kategori> kategoriCollection;
 
     public Buku() {
     }
 
-    public Buku(String idbuku) {
-        this.idbuku = idbuku;
+    public Buku(String idBuku) {
+        this.idBuku = idBuku;
     }
 
-    public String getIdbuku() {
-        return idbuku;
+    public String getIdBuku() {
+        return idBuku;
     }
 
-    public void setIdbuku(String idbuku) {
-        this.idbuku = idbuku;
+    public void setIdBuku(String idBuku) {
+        this.idBuku = idBuku;
     }
 
     public String getIsbn() {
@@ -95,12 +95,12 @@ public class Buku implements Serializable {
         this.judul = judul;
     }
 
-    public String getKategori() {
-        return kategori;
+    public String getSubjudul() {
+        return subjudul;
     }
 
-    public void setKategori(String kategori) {
-        this.kategori = kategori;
+    public void setSubjudul(String subjudul) {
+        this.subjudul = subjudul;
     }
 
     public String getPengarang() {
@@ -147,7 +147,7 @@ public class Buku implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idbuku != null ? idbuku.hashCode() : 0);
+        hash += (idBuku != null ? idBuku.hashCode() : 0);
         return hash;
     }
 
@@ -158,7 +158,7 @@ public class Buku implements Serializable {
             return false;
         }
         Buku other = (Buku) object;
-        if ((this.idbuku == null && other.idbuku != null) || (this.idbuku != null && !this.idbuku.equals(other.idbuku))) {
+        if ((this.idBuku == null && other.idBuku != null) || (this.idBuku != null && !this.idBuku.equals(other.idBuku))) {
             return false;
         }
         return true;
@@ -166,7 +166,19 @@ public class Buku implements Serializable {
 
     @Override
     public String toString() {
-        return "persisten.Buku[ idbuku=" + idbuku + " ]";
+        return "persisten.Buku[ idBuku=" + idBuku + " ]";
+    }
+    
+    public String getAllKategori() {
+        String kategori = "";
+        for (Kategori kat : this.kategoriCollection) {
+            if (kategori.isEmpty()) {
+                kategori = kat.getKategori();
+            } else {
+                kategori += ", " + kat.getKategori();
+            }
+        }
+        return kategori;
     }
     
 }

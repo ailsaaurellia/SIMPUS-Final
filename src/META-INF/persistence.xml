@@ -11,6 +11,8 @@
     <class>persisten.KategorBuku</class>
     <class>persisten.Peminjaman</class>
     <class>persisten.Pengguna</class>
+    <class>persisten.KategoriSkripsi</class>
+    <class>persisten.KategoriBuku</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Simpus"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

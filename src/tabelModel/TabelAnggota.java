@@ -20,7 +20,7 @@ import persisten.Anggota;
 public class TabelAnggota extends AbstractTableModel {
 
     private List<Anggota> listAnggota = new ArrayList<>();
-    private final String[] columnNames = {"No", "ID Anggota", "Nama", "NIM", "Fakultas", "Program Studi", 
+    private final String[] columnNames = {"No", "ID Anggota", "Nama", "NIM", "Fakultas", "Program Studi",
         "Angkatan", "Alamat", "Telepon", "Email", "Jenis Kelamin"};
 
     public void tambahData(Anggota mod) {
@@ -40,6 +40,7 @@ public class TabelAnggota extends AbstractTableModel {
         fireTableRowsDeleted(index, index);
         JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
     }
+
     public void clear() {
         listAnggota.clear();
         fireTableDataChanged();
@@ -52,7 +53,7 @@ public class TabelAnggota extends AbstractTableModel {
     }
 
     public void setData(int index, Anggota mod) {
-       listAnggota.set(index, mod);
+        listAnggota.set(index, mod);
         fireTableRowsUpdated(index, index);
     }
 

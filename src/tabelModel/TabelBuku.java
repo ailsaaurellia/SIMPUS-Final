@@ -18,26 +18,8 @@ import persisten.Buku;
 public class TabelBuku extends AbstractTableModel {
 
     private List<Buku> list = new ArrayList<>();
-    private final String[] columnNames = {"No", "ID Buku", "ISBN", "Judul", "Kategori", 
+    private final String[] columnNames = {"No", "ID Buku", "ISBN", "Judul", "Kategori",
         "Pengarang", "Penerbit", "Tahun", "Halaman"};
-
-    public void tambahData(Buku mod) {
-        list.add(mod);
-        fireTableRowsInserted(list.size() - 1, list.size() - 1);
-        JOptionPane.showMessageDialog(null, "Data Berhasil Ditambahkan");
-    }
-
-    public void perbaruiData(int row, Buku mod) {
-        list.add(row, mod);
-        fireTableDataChanged();
-        JOptionPane.showMessageDialog(null, "Data Berhasil Diperbarui");
-    }
-
-    public void hapusData(int index) {
-        list.remove(index);
-        fireTableRowsDeleted(index, index);
-        JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
-    }
 
     public void clear() {
         list.clear();
@@ -76,13 +58,13 @@ public class TabelBuku extends AbstractTableModel {
         } else {
             switch (columnIndex - 1) {
                 case 0:
-                    return list.get(rowIndex).getIdbuku();
+                    return list.get(rowIndex).getIdBuku();
                 case 1:
                     return list.get(rowIndex).getIsbn();
                 case 2:
                     return list.get(rowIndex).getJudul();
                 case 3:
-                    return list.get(rowIndex).getKategori();
+                    return list.get(rowIndex).getAllKategori();
                 case 4:
                     return list.get(rowIndex).getPengarang();
                 case 5:
