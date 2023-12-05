@@ -9,12 +9,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -24,18 +27,25 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 import persisten.Buku;
+
 /**
  *
  * @author Ailsa
  */
-public class FormBuku extends javax.swing.JPanel {
-    
+public class FormLaporanBuku extends javax.swing.JPanel {
 
     private IFBuku servis = new DaoBuku();
     private TabelBuku tblModel = new TabelBuku();
 
-    public FormBuku() {
+    public FormLaporanBuku() {
         initComponents();
         jTableBuku.setModel(tblModel);
         loadData();
@@ -68,11 +78,10 @@ public class FormBuku extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableBuku = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        btBatal = new javax.swing.JButton();
-        btTambah = new javax.swing.JButton();
         btHapus = new javax.swing.JButton();
         tfCari = new javax.swing.JTextField();
         cbCari = new javax.swing.JComboBox<>();
+        btCetak = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(983, 638));
         setLayout(new java.awt.CardLayout());
@@ -105,49 +114,7 @@ public class FormBuku extends javax.swing.JPanel {
         jLabel1.setBackground(new java.awt.Color(255, 204, 204));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/IconBuku.png"))); // NOI18N
-        jLabel1.setText("Data Buku");
-
-        btBatal.setBackground(new java.awt.Color(239, 117, 117));
-        btBatal.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btBatal.setForeground(new java.awt.Color(255, 255, 255));
-        btBatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/kembali.png"))); // NOI18N
-        btBatal.setText("BATAL");
-        btBatal.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                btBatalMouseMoved(evt);
-            }
-        });
-        btBatal.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btBatalMouseExited(evt);
-            }
-        });
-        btBatal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btBatalActionPerformed(evt);
-            }
-        });
-
-        btTambah.setBackground(new java.awt.Color(122, 182, 218));
-        btTambah.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btTambah.setForeground(new java.awt.Color(255, 255, 255));
-        btTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/tambah.png"))); // NOI18N
-        btTambah.setText("TAMBAH");
-        btTambah.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                btTambahMouseMoved(evt);
-            }
-        });
-        btTambah.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btTambahMouseExited(evt);
-            }
-        });
-        btTambah.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btTambahActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("Laporan Buku");
 
         btHapus.setBackground(new java.awt.Color(227, 202, 11));
         btHapus.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -179,47 +146,70 @@ public class FormBuku extends javax.swing.JPanel {
         cbCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Pilih --", "ID Buku", "ISBN", "Judul", "Kategori", "Pengarang", "Penerbit", "Tahun", "Jumlah Halaman" }));
         cbCari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 183, 137)));
 
+        btCetak.setBackground(new java.awt.Color(255, 102, 102));
+        btCetak.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btCetak.setForeground(new java.awt.Color(255, 255, 255));
+        btCetak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/hapus.png"))); // NOI18N
+        btCetak.setText("CETAK");
+        btCetak.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btCetakMouseMoved(evt);
+            }
+        });
+        btCetak.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btCetakMouseExited(evt);
+            }
+        });
+        btCetak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCetakActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout dataBukuLayout = new javax.swing.GroupLayout(dataBuku);
         dataBuku.setLayout(dataBukuLayout);
         dataBukuLayout.setHorizontalGroup(
             dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dataBukuLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dataBukuLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dataBukuLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addGroup(dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
                             .addGroup(dataBukuLayout.createSequentialGroup()
-                                .addComponent(btTambah)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btBatal)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfCari, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dataBukuLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(tfCari, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cbCari, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1101, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dataBukuLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btCetak, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
         dataBukuLayout.setVerticalGroup(
             dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dataBukuLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btTambah, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                        .addComponent(btHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btBatal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(tfCari, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                        .addComponent(cbCari, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addGap(19, 19, 19)
+                .addGroup(dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tfCari, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(cbCari))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
-                .addGap(40, 40, 40))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btHapus, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(btCetak, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         mainPanel.add(dataBuku, "card2");
@@ -227,14 +217,14 @@ public class FormBuku extends javax.swing.JPanel {
         add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTambahActionPerformed
-         if (btTambah.getText().equalsIgnoreCase("UBAH")) {
-            new Databuku(null, true, (String) jTableBuku.getValueAt(jTableBuku.getSelectedRow(), 1)).setVisible(true);
-        } else {
-            new Databuku(null, true).setVisible(true);
-        }
-        loadData();
-    }//GEN-LAST:event_btTambahActionPerformed
+    private void jTableBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableBukuMouseClicked
+
+        btHapus.setVisible(true);
+    }//GEN-LAST:event_jTableBukuMouseClicked
+
+    private void tfCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCariKeyReleased
+
+    }//GEN-LAST:event_tfCariKeyReleased
 
     private void btHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHapusActionPerformed
         String s = (String) jTableBuku.getValueAt(jTableBuku.getSelectedRow(), 1);
@@ -245,28 +235,11 @@ public class FormBuku extends javax.swing.JPanel {
         loadData();
     }//GEN-LAST:event_btHapusActionPerformed
 
-    private void btTambahMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btTambahMouseMoved
-        btTambah.setForeground(Color.white);
-        ImageIcon icon;
-        if (btTambah.getText().equalsIgnoreCase("UBAH")) {
-            icon = new ImageIcon(getClass().getResource("/gambar/edit.png"));
-        } else {
-            icon = new ImageIcon(getClass().getResource("/gambar/tambah.png"));
-        }
-        btTambah.setIcon(icon);
-    }//GEN-LAST:event_btTambahMouseMoved
-
-    private void btTambahMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btTambahMouseExited
-        btTambah.setForeground(Color.white);
-        ImageIcon icon;
-        if (btTambah.getText().equalsIgnoreCase("UBAH")) {
-            icon = new ImageIcon(getClass().getResource("/gambar/edit.png"));
-        } else {
-            icon = new ImageIcon(getClass().getResource("/gambar/tambah.png"));
-        }
-        btTambah.setIcon(icon);
-        jLabel1.requestFocus();
-    }//GEN-LAST:event_btTambahMouseExited
+    private void btHapusMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btHapusMouseExited
+        btHapus.setForeground(Color.white);
+        ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/hapus.png"));
+        btHapus.setIcon(icon);
+    }//GEN-LAST:event_btHapusMouseExited
 
     private void btHapusMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btHapusMouseMoved
         btHapus.setForeground(Color.white);
@@ -274,47 +247,105 @@ public class FormBuku extends javax.swing.JPanel {
         btHapus.setIcon(icon);
     }//GEN-LAST:event_btHapusMouseMoved
 
-    private void btHapusMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btHapusMouseExited
-        btHapus.setForeground(Color.white);
-        ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/hapus.png"));
-        btHapus.setIcon(icon);
-    }//GEN-LAST:event_btHapusMouseExited
+    private void btCetakMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCetakMouseMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btCetakMouseMoved
 
-    private void btBatalMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btBatalMouseMoved
-        btBatal.setForeground(Color.white);
-        ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/kembali.png"));
-        btBatal.setIcon(icon);
-    }//GEN-LAST:event_btBatalMouseMoved
+    private void btCetakMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCetakMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btCetakMouseExited
 
-    private void btBatalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btBatalMouseExited
-        btBatal.setForeground(Color.white);
-        ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/kembali.png"));
-        btBatal.setIcon(icon);
-    }//GEN-LAST:event_btBatalMouseExited
+    private void btCetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCetakActionPerformed
 
-    private void jTableBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableBukuMouseClicked
-        if (btTambah.getText().equalsIgnoreCase("TAMBAH")) {
-            btTambah.setText("UBAH");
-            ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/edit.png"));
-            btTambah.setIcon(icon);
+        String reportPath = "src/cetak/Buku.jrxml";
+        String selection = (String) cbCari.getSelectedItem();
+        String searchTerm = tfCari.getText().trim();
+
+        // Building the JPA query dynamically based on the selected criteria
+        String queryString = "SELECT b FROM Buku b WHERE ";
+
+        switch (cbCari.getSelectedIndex()) {
+            case 1:
+                queryString += "LOWER(b.id) LIKE LOWER(:searchTerm)";
+                break;
+            case 2:
+                queryString += "LOWER(b.isbn) LIKE LOWER(:searchTerm)";
+                break;
+            case 3:
+                queryString += "LOWER(b.judul) LIKE LOWER(:searchTerm)";
+                break;
+            case 4:
+                queryString += "LOWER(b.kategori) LIKE LOWER(:searchTerm)";
+                break;
+            case 5:
+                queryString += "LOWER(b.pengarang) LIKE LOWER(:searchTerm)";
+                break;
+            case 6:
+                queryString += "LOWER(b.penerbit) LIKE LOWER(:searchTerm)";
+                break;
+            case 7:
+                queryString += "LOWER(b.tahun) LIKE LOWER(:searchTerm)";
+                break;
+            case 8:
+                queryString += "LOWER(b.halaman) LIKE LOWER(:searchTerm)";
+                break;
+            default:
+                throw new IllegalArgumentException("No search criteria selected.");
         }
-        btHapus.setVisible(true);
-        btBatal.setVisible(true);
-    }//GEN-LAST:event_jTableBukuMouseClicked
 
-    private void btBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBatalActionPerformed
-        loadData();
-    }//GEN-LAST:event_btBatalActionPerformed
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("UASPBOPU");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
 
-    private void tfCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCariKeyReleased
+        Query query = em.createQuery(queryString);
+        query.setParameter("searchTerm", "%" + searchTerm + "%");
 
-    }//GEN-LAST:event_tfCariKeyReleased
+        List<Buku> results = query.getResultList();
+        em.getTransaction().commit();
+        em.close();
+        emf.close();
+
+        // Menyiapkan data untuk laporan
+        List<Object[]> data = new ArrayList<>();
+        for (Buku result : results) {
+            Object[] rowData = {
+                result.getIdBuku(),
+                result.getIsbn(),
+                result.getJudul(),
+                result.getAllKategori(),
+                result.getPengarang(),
+                result.getPenerbit(),
+                result.getTahun(),
+                result.getHalaman()
+            };
+            data.add(rowData);
+        }
+
+        try {
+            // Mengonversi List menjadi JRBeanCollectionDataSource
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(data);
+
+            // Menyiapkan parameter untuk laporan
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("querySearch", searchTerm);
+            parameters.put("searchBy", selection);
+
+            // Memuat file desain laporan (*.jrxml)
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportPath);
+            JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+            JasperViewer viewer = new JasperViewer(print, false);
+            viewer.setVisible(true);
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+            // Handle kesalahan jika terjadi
+
+    }//GEN-LAST:event_btCetakActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btBatal;
+    private javax.swing.JButton btCetak;
     private javax.swing.JButton btHapus;
-    private javax.swing.JButton btTambah;
     private javax.swing.JComboBox<String> cbCari;
     private javax.swing.JPanel dataBuku;
     private javax.swing.JLabel jLabel1;
@@ -339,13 +370,7 @@ public class FormBuku extends javax.swing.JPanel {
     private void loadData() {
         List<Buku> list = servis.ambilData();
         tblModel.setData(list);
-        if (btTambah.getText().equalsIgnoreCase("UBAH")) {
-            btTambah.setText("TAMBAH");
-            ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/tambah.png"));
-            btTambah.setIcon(icon);
-        }
-        btHapus.setVisible(false);
-        btBatal.setVisible(false);
+        btHapus.setVisible(true);
         jLabel1.requestFocus();
 
     }

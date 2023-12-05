@@ -17,6 +17,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.swing.table.DefaultTableModel;
 import persisten.Buku;
 import persisten.Kategori;
 
@@ -214,5 +215,4 @@ public class DaoBuku implements IFBuku {
         em.close();
         return urutan;
     }
-
 }

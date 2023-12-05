@@ -21,6 +21,7 @@ public interface IFSkripsi {
     List<Skripsi> getByID(String id);
     List<Skripsi> getByJudul(String judul);
     List<Skripsi> getByBahasa(String bahasa);
+    List<Skripsi> getByKategori(String kategori);
     List<Skripsi> getByFakultas(String fakultas);
     List<Skripsi> getByProdi(String prodi);
     List<Skripsi> getByTahun(String tahun);

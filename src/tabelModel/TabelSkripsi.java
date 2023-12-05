@@ -78,6 +78,7 @@ public class TabelSkripsi extends AbstractTableModel {
 
         }
 
+
     }
 
     @Override

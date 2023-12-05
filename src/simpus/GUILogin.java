@@ -1,7 +1,6 @@
 package simpus;
 
 
-import cobacoba.GUIMenu;
 import java.awt.Menu;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,7 +14,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.JOptionPane;
-import persisten.Login;
+import persisten.Pengguna;
 
 
 
@@ -35,7 +34,7 @@ public class GUILogin extends javax.swing.JFrame {
         jTextUser.setText("");
         jPass.setText("");
     }
-    ArrayList<Login> login;
+    ArrayList<Pengguna> login;
 
     /**
      * Creates new form GUILogin
@@ -123,7 +122,7 @@ public class GUILogin extends javax.swing.JFrame {
             em.getTransaction().begin();
 
             // Assuming you have a User entity with attributes 'username' and 'password'
-            Query query = em.createQuery("SELECT l FROM Login l WHERE l.username = :username AND l.password = :password");
+            Query query = em.createQuery("SELECT p FROM Pengguna p WHERE p.username = :username AND p.password = :password");
             query.setParameter("username", username);
             query.setParameter("password", password);
 

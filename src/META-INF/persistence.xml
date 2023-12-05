@@ -2,17 +2,16 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="UASPBOPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>persisten.Anggota</class>
-    <class>persisten.Buku</class>
     <class>persisten.Skripsi</class>
-    <class>persisten.Login</class>
-    <class>persisten.Petugas</class>
     <class>persisten.Kategori</class>
-    <class>persisten.KategorBuku</class>
     <class>persisten.Peminjaman</class>
     <class>persisten.Pengguna</class>
-    <class>persisten.KategoriSkripsi</class>
-    <class>persisten.KategoriBuku</class>
+    <class>persisten.Buku</class>
+    <class>persisten.DetailBuku</class>
+    <class>persisten.Login</class>
+    <class>persisten.DetailSkripsi</class>
+    <class>persisten.PeminjamanSkripsi</class>
+    <class>persisten.PeminjamanBuku</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Simpus"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

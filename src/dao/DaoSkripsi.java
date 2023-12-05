@@ -7,6 +7,7 @@ package dao;
 
 import Interfacej.IFSkripsi;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -14,6 +15,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import persisten.Kategori;
 import persisten.Skripsi;
 
 /**
@@ -181,24 +183,42 @@ public class DaoSkripsi implements IFSkripsi {
 
     @Override
     public String nomer() {
-        EntityManager em = Persistence.createEntityManagerFactory("LibraLinxPU").createEntityManager();
-        String jpql = "SELECT SUBSTRING(b.idSkripsi, LENGTH(b.idSkripsi) - 2) AS nomor "
-                + "FROM Skripsi b WHERE b.idSkripsi LIKE 'SK%' ORDER BY b.idSkripsi DESC";
+        EntityManager em = Persistence.createEntityManagerFactory("UASPBOPU").createEntityManager();
+        String jpql = "SELECT SUBSTRING(s.idSkripsi, LENGTH(s.idSkripsi) - 2) AS nomor "
+                + "FROM Skripsi s WHERE s.idSkripsi LIKE 'SK%' ORDER BY s.idSkripsi DESC";
         TypedQuery<String> query = em.createQuery(jpql, String.class);
         query.setMaxResults(1);
-        Date now = new Date();
-        SimpleDateFormat tanggal = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat nonformat = new SimpleDateFormat("yyMMdd");
-        tanggal.format(now);
-        String no = nonformat.format(now);
+
         String urutan = "";
         try {
-            urutan = "SK" + no + String.format("%03d", Integer.parseInt(query.getSingleResult()) + 1);
+            String lastNumber = query.getSingleResult();
+            int nextNumber = Integer.parseInt(lastNumber) + 1;
+            urutan = "SK" + String.format("%03d", nextNumber);
         } catch (NoResultException e) {
-            urutan = "SK" + no + "001";
+            // Jika tidak ada data, mulai dari 001
+            urutan = "SK001";
         }
+
         em.close();
         return urutan;
+    }
+
+    @Override
+    public List<Skripsi> getByKategori(String kategori) {
+        List<Kategori> kat = new DaoKategori().getByKategori(kategori);
+        List<Skripsi> list = new ArrayList();
+        for(Kategori k : kat){
+            for(Skripsi b: k.getSkripsiCollection()){
+                boolean bol = true;
+                for(Skripsi bk : list){
+                    if(b.getIdSkripsi().equals(bk.getIdSkripsi()))
+                        bol = false;
+                }
+                if(bol)
+                    list.add(b);
+            }
+        }
+        return list;
     }
 
 }

@@ -8,6 +8,7 @@ package persisten;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -63,6 +65,8 @@ public class Buku implements Serializable {
         @JoinColumn(name = "id_kategori", referencedColumnName = "id_kategori")})
     @ManyToMany
     private Collection<Kategori> kategoriCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "buku")
+    private Collection<PeminjamanBuku> peminjamanBukuCollection;
 
     public Buku() {
     }
@@ -142,6 +146,15 @@ public class Buku implements Serializable {
 
     public void setKategoriCollection(Collection<Kategori> kategoriCollection) {
         this.kategoriCollection = kategoriCollection;
+    }
+
+    @XmlTransient
+    public Collection<PeminjamanBuku> getPeminjamanBukuCollection() {
+        return peminjamanBukuCollection;
+    }
+
+    public void setPeminjamanBukuCollection(Collection<PeminjamanBuku> peminjamanBukuCollection) {
+        this.peminjamanBukuCollection = peminjamanBukuCollection;
     }
 
     @Override

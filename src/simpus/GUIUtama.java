@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import simpus.FormAnggota;
 import simpus.FormKategori;
 import simpus.FormSkripsi;
 
@@ -27,6 +26,7 @@ public class GUIUtama extends javax.swing.JFrame {
      */
     public GUIUtama() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         execute();
     }
@@ -229,28 +229,35 @@ public class GUIUtama extends javax.swing.JFrame {
         });
 
         MenuItem menuSkripsi = new MenuItem(null, true, IconSkripsi, "Data Skripsi", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+         @Override
+         public void actionPerformed(ActionEvent e) {
                 pnUtama.removeAll();
                 pnUtama.add(new FormSkripsi());
                 pnUtama.repaint();
                 pnUtama.revalidate();
-
             }
         });
-        MenuItem menuKategori = new MenuItem(null, true, IconKategori, "Kategori", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        MenuItem menuKategori = new MenuItem(null, true, IconKategori, "Kategori",  new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
                 pnUtama.removeAll();
                 pnUtama.add(new FormKategori());
                 pnUtama.repaint();
                 pnUtama.revalidate();
-
             }
         });
-
-        MenuItem menuPinjam = new MenuItem(null, true, IconPeminjaman, "Peminjaman", null);
-        MenuItem menuBalik = new MenuItem(null, true, IconPengembalian, "Pengembalian", null);
+        MenuItem menuPinjamB = new MenuItem(null, true, IconBuku, "Pinjam Buku", null);
+        MenuItem menuPinjamS = new MenuItem(null, true, IconSkripsi, "Pinjam Skripsi", null);
+        MenuItem menuLBuku = new MenuItem(null, true, IconBuku, "Buku", new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+                pnUtama.removeAll();
+                pnUtama.add(new FormLaporanBuku());
+                pnUtama.repaint();
+                pnUtama.revalidate();
+            }
+        });
+        MenuItem menuLSkripsi = new MenuItem(null, true, IconSkripsi, "Skripsi", null);
+        MenuItem menuLPeminjaman = new MenuItem(null, true, IconPeminjaman, "Peminjaman", null);
 
         MenuItem menuDashboard = new MenuItem(IconDashboard, false, null, "Home", new ActionListener() {
             @Override
@@ -261,21 +268,21 @@ public class GUIUtama extends javax.swing.JFrame {
                 pnUtama.revalidate();
             }
         });
-        MenuItem menuPengguna = new MenuItem(IconPengguna, false, null, "Data Anggota", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        MenuItem menuPengguna = new MenuItem(IconPengguna, false, null, "Pengguna",new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
                 pnUtama.removeAll();
-                pnUtama.add(new FormAnggota());
+                pnUtama.add(new FormPengguna());
                 pnUtama.repaint();
                 pnUtama.revalidate();
             }
         });
         MenuItem menuData = new MenuItem(IconData, false, null, "Data", null, menuBuku, menuSkripsi, menuKategori);
-        MenuItem menuTransaksi = new MenuItem(IconTransaksi, false, null, "Transaksi", null, menuPinjam, menuBalik);
-        MenuItem menuLaporan = new MenuItem(IconLaporan, false, null, "Laporan", null);
+        MenuItem menuPeminjaman = new MenuItem(IconPeminjaman, false, null, "Peminjaman", null, menuPinjamB, menuPinjamS);
+        MenuItem menuLaporan = new MenuItem(IconLaporan, false, null, "Laporan", null, menuLBuku, menuLSkripsi, menuLPeminjaman);
         MenuItem menuSetting = new MenuItem(IconSetting, false, null, "Pengaturan", null);
 
-        addMenu(menuDashboard, menuPengguna, menuData, menuTransaksi, menuLaporan, menuSetting);
+        addMenu(menuDashboard, menuPengguna, menuData, menuPeminjaman, menuLaporan, menuSetting);
 
     }
 

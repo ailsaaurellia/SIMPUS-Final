@@ -8,12 +8,14 @@ package persisten;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -61,6 +63,8 @@ public class Skripsi implements Serializable {
     private String jumlahHalaman;
     @ManyToMany(mappedBy = "skripsiCollection")
     private Collection<Kategori> kategoriCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "skripsi")
+    private Collection<PeminjamanSkripsi> peminjamanSkripsiCollection;
 
     public Skripsi() {
     }
@@ -150,6 +154,15 @@ public class Skripsi implements Serializable {
         this.kategoriCollection = kategoriCollection;
     }
 
+    @XmlTransient
+    public Collection<PeminjamanSkripsi> getPeminjamanSkripsiCollection() {
+        return peminjamanSkripsiCollection;
+    }
+
+    public void setPeminjamanSkripsiCollection(Collection<PeminjamanSkripsi> peminjamanSkripsiCollection) {
+        this.peminjamanSkripsiCollection = peminjamanSkripsiCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -174,15 +187,15 @@ public class Skripsi implements Serializable {
     public String toString() {
         return "persisten.Skripsi[ idSkripsi=" + idSkripsi + " ]";
     }
-    
-     public String getAllKategori(){
+    public String getAllKategori() {
         String kategori = "";
-        for(Kategori kat : this.kategoriCollection){
-                if(kategori.isEmpty())
-                    kategori = kat.getKategori();
-                else 
-                    kategori += ", " + kat.getKategori();
+        for (Kategori kat : this.kategoriCollection) {
+            if (kategori.isEmpty()) {
+                kategori = kat.getKategori();
+            } else {
+                kategori += ", " + kat.getKategori();
             }
+        }
         return kategori;
     }
     

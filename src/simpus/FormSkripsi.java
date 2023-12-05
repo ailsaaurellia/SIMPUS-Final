@@ -19,6 +19,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import persisten.Skripsi;
@@ -37,6 +39,24 @@ public class FormSkripsi extends javax.swing.JPanel {
         jTableBuku.setModel(tblModel);
         loadData();
         setColWidht();
+        
+         tfCari.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                performSearch();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                performSearch();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // Plain text components do not fire these events
+            }
+        });
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -51,27 +71,8 @@ public class FormSkripsi extends javax.swing.JPanel {
         btBatal = new javax.swing.JButton();
         btTambah = new javax.swing.JButton();
         btHapus = new javax.swing.JButton();
-        tambahData = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        btBatal1 = new javax.swing.JButton();
-        btSimpan = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jTextId = new javax.swing.JTextField();
-        jTextKat = new javax.swing.JTextField();
-        jTextIsbn = new javax.swing.JTextField();
-        jTextJudul = new javax.swing.JTextField();
-        jTextPengarang = new javax.swing.JTextField();
-        jTextPenerbit = new javax.swing.JTextField();
-        jTextTahun = new javax.swing.JTextField();
-        jTextHalaman = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
+        tfCari = new javax.swing.JTextField();
+        cbCari = new javax.swing.JComboBox<>();
 
         setPreferredSize(new java.awt.Dimension(983, 638));
         setLayout(new java.awt.CardLayout());
@@ -169,6 +170,15 @@ public class FormSkripsi extends javax.swing.JPanel {
             }
         });
 
+        tfCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfCariKeyReleased(evt);
+            }
+        });
+
+        cbCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Pilih --", "ID Skripsi", "Judul", "Bahasa", "Fakultas", "Program Studi", "Tahun", "Penulis", "Pembimbing", "Jumlah Halaman", "Kategori" }));
+        cbCari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 183, 137)));
+
         javax.swing.GroupLayout dataBukuLayout = new javax.swing.GroupLayout(dataBuku);
         dataBuku.setLayout(dataBukuLayout);
         dataBukuLayout.setHorizontalGroup(
@@ -177,19 +187,23 @@ public class FormSkripsi extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dataBukuLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE)
-                        .addGap(20, 20, 20))
-                    .addGroup(dataBukuLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addGroup(dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
+                            .addGroup(dataBukuLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 701, Short.MAX_VALUE))
                             .addGroup(dataBukuLayout.createSequentialGroup()
                                 .addComponent(btTambah)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btBatal)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(btBatal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tfCari, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbCari, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         dataBukuLayout.setVerticalGroup(
             dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,233 +211,32 @@ public class FormSkripsi extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btTambah, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                    .addComponent(btHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btBatal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btTambah, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                        .addComponent(btHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btBatal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(dataBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(tfCari, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(cbCari, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
                 .addGap(40, 40, 40))
         );
 
         mainPanel.add(dataBuku, "card2");
 
-        tambahData.setBackground(new java.awt.Color(255, 255, 255));
-        tambahData.setPreferredSize(new java.awt.Dimension(983, 638));
-
-        jLabel2.setBackground(new java.awt.Color(255, 204, 204));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel2.setText("Tambah Data Buku");
-
-        btBatal1.setBackground(new java.awt.Color(239, 117, 117));
-        btBatal1.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
-        btBatal1.setForeground(new java.awt.Color(255, 255, 255));
-        btBatal1.setText("BATAL");
-        btBatal1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btBatal1ActionPerformed(evt);
-            }
-        });
-
-        btSimpan.setBackground(new java.awt.Color(122, 182, 218));
-        btSimpan.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
-        btSimpan.setForeground(new java.awt.Color(255, 255, 255));
-        btSimpan.setText("TAMBAH");
-        btSimpan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSimpanActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(193, 132, 10));
-        jLabel3.setText("ID Buku");
-
-        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(193, 132, 10));
-        jLabel4.setText("ISBN");
-
-        jLabel5.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(193, 132, 10));
-        jLabel5.setText("Judul");
-
-        jLabel6.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(193, 132, 10));
-        jLabel6.setText("Kategori");
-
-        jLabel7.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(193, 132, 10));
-        jLabel7.setText("Pengarang");
-
-        jLabel8.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(193, 132, 10));
-        jLabel8.setText("Penerbit");
-
-        jLabel9.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(193, 132, 10));
-        jLabel9.setText("Tahun");
-
-        jLabel10.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(193, 132, 10));
-        jLabel10.setText("Jumlah Halaman");
-
-        jTextId.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(193, 132, 10)));
-
-        jTextKat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(193, 132, 10)));
-
-        jTextIsbn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(193, 132, 10)));
-
-        jTextJudul.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(193, 132, 10)));
-
-        jTextPengarang.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(193, 132, 10)));
-
-        jTextPenerbit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(193, 132, 10)));
-
-        jTextTahun.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(193, 132, 10)));
-
-        jTextHalaman.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(193, 132, 10)));
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/IconBuku.png"))); // NOI18N
-
-        javax.swing.GroupLayout tambahDataLayout = new javax.swing.GroupLayout(tambahData);
-        tambahData.setLayout(tambahDataLayout);
-        tambahDataLayout.setHorizontalGroup(
-            tambahDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tambahDataLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2))
-            .addGroup(tambahDataLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btBatal1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(tambahDataLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(tambahDataLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(tambahDataLayout.createSequentialGroup()
-                .addGap(282, 282, 282)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(tambahDataLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jTextJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(tambahDataLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(tambahDataLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(tambahDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextKat, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(tambahDataLayout.createSequentialGroup()
-                        .addGap(262, 262, 262)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(84, 84, 84)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(tambahDataLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jTextPengarang, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84)
-                .addComponent(jTextTahun, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(tambahDataLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(529, 529, 529)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(tambahDataLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jTextPenerbit, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89)
-                .addComponent(jTextHalaman, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(tambahDataLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(tambahDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextId, javax.swing.GroupLayout.DEFAULT_SIZE, 902, Short.MAX_VALUE)
-                    .addComponent(jTextIsbn))
-                .addGap(61, 61, 61))
-        );
-        tambahDataLayout.setVerticalGroup(
-            tambahDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tambahDataLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(tambahDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(7, 7, 7)
-                .addGroup(tambahDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btBatal1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addComponent(jLabel3)
-                .addGap(17, 17, 17)
-                .addComponent(jTextId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jLabel4)
-                .addGap(5, 5, 5)
-                .addComponent(jTextIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jLabel5)
-                .addGap(13, 13, 13)
-                .addComponent(jTextJudul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addComponent(jLabel6)
-                .addGap(6, 6, 6)
-                .addGroup(tambahDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tambahDataLayout.createSequentialGroup()
-                        .addComponent(jTextKat, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabel7))
-                    .addGroup(tambahDataLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel9)))
-                .addGap(3, 3, 3)
-                .addGroup(tambahDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tambahDataLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jTextPengarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(2, 2, 2)
-                .addGroup(tambahDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tambahDataLayout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(jLabel8))
-                    .addComponent(jLabel10))
-                .addGap(13, 13, 13)
-                .addGroup(tambahDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextPenerbit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextHalaman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(80, Short.MAX_VALUE))
-        );
-
-        mainPanel.add(tambahData, "card2");
-
         add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
     private void btTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTambahActionPerformed
-       if (btTambah.getText().equalsIgnoreCase("UBAH")) {
-    // Jika teks tombol adalah "UBAH"
-    // Buka panel tambahData dan lakukan pengaturan yang diperlukan
-    mainPanel.removeAll();
-    mainPanel.repaint();
-    mainPanel.revalidate();
-    
-    mainPanel.add(tambahData);
-    mainPanel.repaint();
-    mainPanel.revalidate();
-// Lakukan pekerjaan tambahan atau load data yang diperlukan
-loadData();
-
-        jTextId.setText(servis.nomer());
-       }
+        if (btTambah.getText().equalsIgnoreCase("UBAH")) {
+            new Dataskripsi(null, true, (String) jTableBuku.getValueAt(jTableBuku.getSelectedRow(), 1)).setVisible(true);
+        } else {
+            new Dataskripsi(null, true).setVisible(true);
+        }
+        loadData();
     }//GEN-LAST:event_btTambahActionPerformed
-
-    private void btSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSimpanActionPerformed
-
-    }//GEN-LAST:event_btSimpanActionPerformed
 
     private void btHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHapusActionPerformed
         String s = (String) jTableBuku.getValueAt(jTableBuku.getSelectedRow(), 1);
@@ -444,10 +257,6 @@ loadData();
         }
         btTambah.setIcon(icon);
     }//GEN-LAST:event_btTambahMouseMoved
-
-    private void btBatal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBatal1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btBatal1ActionPerformed
 
     private void btTambahMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btTambahMouseExited
         btTambah.setForeground(Color.white);
@@ -499,37 +308,22 @@ loadData();
          loadData();
     }//GEN-LAST:event_btBatalActionPerformed
 
+    private void tfCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCariKeyReleased
+
+    }//GEN-LAST:event_tfCariKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBatal;
-    private javax.swing.JButton btBatal1;
     private javax.swing.JButton btHapus;
-    private javax.swing.JButton btSimpan;
     private javax.swing.JButton btTambah;
+    private javax.swing.JComboBox<String> cbCari;
     private javax.swing.JPanel dataBuku;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableBuku;
-    private javax.swing.JTextField jTextHalaman;
-    private javax.swing.JTextField jTextId;
-    private javax.swing.JTextField jTextIsbn;
-    private javax.swing.JTextField jTextJudul;
-    private javax.swing.JTextField jTextKat;
-    private javax.swing.JTextField jTextPenerbit;
-    private javax.swing.JTextField jTextPengarang;
-    private javax.swing.JTextField jTextTahun;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JPanel tambahData;
+    private javax.swing.JTextField tfCari;
     // End of variables declaration//GEN-END:variables
 
     private void setColWidht() {
@@ -555,6 +349,51 @@ loadData();
         btBatal.setVisible(false);
         jLabel1.requestFocus();
 
+    }
+    
+    private void performSearch() {
+        String sc = tfCari.getText();
+        List<Skripsi> list = new ArrayList<>();
+
+        if (sc.isEmpty()) {
+            list = servis.ambilData();
+        } else {
+            switch (cbCari.getSelectedIndex()) {
+                case 1:
+                    list = servis.getByID(sc);
+                    break;
+                case 2:
+                    list = servis.getByJudul(sc);
+                    break;
+                case 3:
+                    list = servis.getByBahasa(sc);
+                    break;
+                case 4:
+                    list = servis.getByFakultas(sc);
+                    break;
+                case 5:
+                    list = servis.getByProdi(sc);
+                    break;
+                case 6:
+                    list = servis.getByTahun(sc);
+                    break;
+                case 7:
+                    list = servis.getByPenulis(sc);
+                    break;
+                case 8:
+                    list = servis.getByPembimbing(sc);
+                    break;
+                case 9:
+                    list = servis.getByHalaman(sc);
+                    break;
+                case 10:
+                    list = servis.getByKategori(sc);
+                    break;
+                // tambahkan case lain sesuai kebutuhan
+            }
+        }
+
+        tblModel.setData(list);
     }
 
 }
