@@ -101,8 +101,8 @@ public class GUIUtama extends javax.swing.JFrame {
                         .addComponent(jLabel5))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
-                .addComponent(pnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65))
+                .addComponent(pnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
 
         getContentPane().add(pnSidebar, java.awt.BorderLayout.LINE_START);
@@ -257,7 +257,9 @@ public class GUIUtama extends javax.swing.JFrame {
             }
         });
         MenuItem menuLSkripsi = new MenuItem(null, true, IconSkripsi, "Skripsi", null);
-        MenuItem menuLPeminjaman = new MenuItem(null, true, IconPeminjaman, "Peminjaman", null);
+        MenuItem menuPBuku = new MenuItem(null, true, IconBuku, "Buku", null);
+        MenuItem menuPSkripsi = new MenuItem(null, true, IconSkripsi, "Skripsi", null);
+       
 
         MenuItem menuDashboard = new MenuItem(IconDashboard, false, null, "Home", new ActionListener() {
             @Override
@@ -279,10 +281,11 @@ public class GUIUtama extends javax.swing.JFrame {
         });
         MenuItem menuData = new MenuItem(IconData, false, null, "Data", null, menuBuku, menuSkripsi, menuKategori);
         MenuItem menuPeminjaman = new MenuItem(IconPeminjaman, false, null, "Peminjaman", null, menuPinjamB, menuPinjamS);
-        MenuItem menuLaporan = new MenuItem(IconLaporan, false, null, "Laporan", null, menuLBuku, menuLSkripsi, menuLPeminjaman);
+        MenuItem menuLaporan = new MenuItem(IconLaporan, false, null, "Laporan Data", null, menuLBuku, menuLSkripsi);
+        MenuItem menuLaporanP = new MenuItem(IconLaporan, false, null, "Laporan Peminjaman", null, menuPBuku, menuPSkripsi);
         MenuItem menuSetting = new MenuItem(IconSetting, false, null, "Pengaturan", null);
 
-        addMenu(menuDashboard, menuPengguna, menuData, menuPeminjaman, menuLaporan, menuSetting);
+        addMenu(menuDashboard, menuPengguna, menuData, menuPeminjaman, menuLaporan,menuLaporanP, menuSetting);
 
     }
 

@@ -87,7 +87,7 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[ $P{querySearch}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{querySearch}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="105" y="56" width="83" height="30" uuid="72417fe0-bdf5-4277-a2d7-82e42b9914d8">
@@ -103,7 +103,7 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[ $P{searchBy}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{searchBy}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

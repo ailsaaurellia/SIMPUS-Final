@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.swing.DefaultComboBoxModel;
@@ -55,6 +56,7 @@ public class FormPengguna1 extends javax.swing.JPanel {
 
         selectedDate1 = new com.raven.datechooser.SelectedDate();
         dateChooser1 = new com.raven.datechooser.DateChooser();
+        bgJenis = new javax.swing.ButtonGroup();
         mainPanel = new javax.swing.JPanel();
         dataPengguna = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -430,10 +432,12 @@ public class FormPengguna1 extends javax.swing.JPanel {
         jLabel9.setText("Tanggal Lahir");
 
         rbLaki.setBackground(new java.awt.Color(255, 255, 255));
+        bgJenis.add(rbLaki);
         rbLaki.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         rbLaki.setText("Laki - laki");
 
         rbPerempuan.setBackground(new java.awt.Color(255, 255, 255));
+        bgJenis.add(rbPerempuan);
         rbPerempuan.setText("Perempuan");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -545,7 +549,7 @@ public class FormPengguna1 extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tf_tempat))
+                    .addComponent(tf_tempat, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
@@ -554,7 +558,7 @@ public class FormPengguna1 extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_email, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tf_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 208, Short.MAX_VALUE))
+                .addGap(0, 213, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout tambahDataLayout = new javax.swing.GroupLayout(tambahData);
@@ -584,7 +588,7 @@ public class FormPengguna1 extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tambahDataLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 733, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 738, Short.MAX_VALUE)
                 .addGroup(tambahDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -607,13 +611,17 @@ public class FormPengguna1 extends javax.swing.JPanel {
         mainPanel.repaint();
         mainPanel.revalidate();
 
-
+        tf_id.setText(setIDPengguna());
+        if (btTambah.getText().equals("UBAH")) {
+            dataTabel();
+            btn_simpan.setText("UBAH");
+        }
     }//GEN-LAST:event_btTambahActionPerformed
 
     private void btHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHapusActionPerformed
         String s = (String) jTablePengguna.getValueAt(jTablePengguna.getSelectedRow(), 1);
         ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/hapus.png"));
-
+        hapusData();
         loadData();
     }//GEN-LAST:event_btHapusActionPerformed
 
@@ -665,10 +673,15 @@ public class FormPengguna1 extends javax.swing.JPanel {
     }//GEN-LAST:event_btBatalMouseExited
 
     private void jTablePenggunaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePenggunaMouseClicked
-
+        if (btTambah.getText().equals("TAMBAH")) {
+            btTambah.setText("UBAH");
+            btHapus.setVisible(true);
+            btBatal.setVisible(true);
+        }
     }//GEN-LAST:event_jTablePenggunaMouseClicked
 
     private void btBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBatalActionPerformed
+        showPanel();
         loadData();
     }//GEN-LAST:event_btBatalActionPerformed
 
@@ -677,15 +690,18 @@ public class FormPengguna1 extends javax.swing.JPanel {
     }//GEN-LAST:event_tfCariKeyReleased
 
     private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
-        mainPanel.removeAll();
-        mainPanel.add(dataPengguna);
-        mainPanel.repaint();
-        mainPanel.revalidate();
-
+        showPanel();
+        loadData();
     }//GEN-LAST:event_btn_batalActionPerformed
 
     private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
-
+        if (btn_simpan.getText().equals("TAMBAH")) {
+            btn_simpan.setText("SIMPAN");
+        } else if (btn_simpan.getText().equals("SIMPAN")) {
+            insertData();
+        } else if (btn_simpan.getText().equals("UBAH")) {
+            updateData();
+        }
     }//GEN-LAST:event_btn_simpanActionPerformed
 
     private void tf_nimKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nimKeyTyped
@@ -739,6 +755,7 @@ public class FormPengguna1 extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgJenis;
     private javax.swing.JButton btBatal;
     private javax.swing.JButton btHapus;
     private javax.swing.JButton btTambah;
@@ -785,21 +802,8 @@ public class FormPengguna1 extends javax.swing.JPanel {
     private javax.swing.JTextField tf_user;
     // End of variables declaration//GEN-END:variables
 
-//    private void setColWidht() {
-//        int[] noCol = {0, 1, 2, 7, 8};
-//        int[] noColW = {60, 80, 150, 80, 80};
-//
-//        TableColumnModel tblModel = jTablePengguna.getColumnModel();
-//        for (int i = 0; i < noCol.length; i++) {
-//            tblModel.getColumn(noCol[i]).setPreferredWidth(noColW[i]);
-//            tblModel.getColumn(noCol[i]).setMaxWidth(noColW[i]);
-//            tblModel.getColumn(noCol[i]).setMinWidth(noColW[i]);
-//        }
-//    }
     private void loadData() {
         getData((DefaultTableModel) jTablePengguna.getModel());
-//        List<Pengguna> list = servis.ambilData();
-//        tblModel.setData(list);
         if (btTambah.getText().equalsIgnoreCase("UBAH")) {
             btTambah.setText("TAMBAH");
             ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/tambah.png"));
@@ -808,7 +812,31 @@ public class FormPengguna1 extends javax.swing.JPanel {
         btHapus.setVisible(false);
         btBatal.setVisible(false);
         jLabel1.requestFocus();
+    }
 
+    private void showPanel() {
+        mainPanel.removeAll();
+        mainPanel.repaint();
+        mainPanel.revalidate();
+        mainPanel.add(dataPengguna);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+    }
+
+    private void kosongkanForm() {
+        tf_id.setText("");
+        tf_nim.setText("");
+        tf_nama.setText("");
+        tf_jurusan.setText("");
+        tf_tempat.setText("");
+        tf_tanggal.setText("");
+        tf_user.setText("");
+        tf_pass.setText("");
+        tf_alamat.setText("");
+        cbLevel.setSelectedItem(this);
+        bgJenis.clearSelection();
+        tf_telp.setText("");
+        tf_email.setText("");
     }
 
     private void setTabelModel() {
@@ -872,4 +900,218 @@ public class FormPengguna1 extends javax.swing.JPanel {
         }
     }
 
+    private String setIDPengguna() {
+        EntityManager em = Persistence.createEntityManagerFactory("UASPBOPU").createEntityManager();
+        String jpql = "SELECT SUBSTRING(p.idPengguna, LENGTH(p.idPengguna) - 2) AS nomor "
+                + "FROM Pengguna p WHERE p.idPengguna LIKE 'PG%' ORDER BY p.idPengguna DESC";
+        TypedQuery<String> query = em.createQuery(jpql, String.class);
+        query.setMaxResults(1);
+
+        String urutan = "";
+        try {
+            String lastNumber = query.getSingleResult().replaceAll("[^\\d]", "");
+            int nextNumber = Integer.parseInt(lastNumber) + 1;
+            urutan = "PG" + String.format("%02d", nextNumber);
+
+        } catch (Exception e) {
+            // Tangani kesalahan dengan lebih baik
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+
+        return urutan;
+    }
+
+    private void insertData() {
+        String id = tf_id.getText().trim();
+        String nim = tf_nim.getText();
+        String nama = tf_nama.getText();
+        String jurusan = tf_jurusan.getText();
+        String tempat = tf_tempat.getText();
+        String tanggal = tf_tanggal.getText();
+        String user = tf_user.getText();
+        String pass = tf_pass.getText();
+        String alamat = tf_alamat.getText();
+        String level = (String) cbLevel.getSelectedItem();
+        String jenis;
+        if (rbLaki.isSelected()) {
+            jenis = rbLaki.getText();
+        } else if (rbPerempuan.isSelected()) {
+            jenis = rbPerempuan.getText();
+        } else {
+            jenis = "";
+        }
+        String telp = tf_telp.getText();
+        String email = tf_email.getText();
+
+        if (id.isEmpty() || nim.isEmpty() || nama.isEmpty() || user.isEmpty() || pass.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Semua kolom harus diisi", "Validasi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        EntityManager em = Persistence.createEntityManagerFactory("UASPBOPU").createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            Pengguna p = new Pengguna();
+            p.setIdPengguna(id);
+            p.setNim(nim);
+            p.setNama(nama);
+            p.setJurusan(jurusan);
+            p.setTempatLahir(tempat);
+            p.setTanggalLahir(tanggal);
+            p.setUsername(user);
+            p.setPassword(pass);
+            p.setAlamat(alamat);
+            p.setLevel(level);
+            p.setJenisKelamin(jenis);
+            p.setTelephone(telp);
+            p.setEmail(email);
+            em.persist(p);
+            em.getTransaction().commit();
+
+            JOptionPane.showMessageDialog(this, "Data Berhasil Disimpan", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            JOptionPane.showMessageDialog(this, "Data Gagal Disimpan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            em.close();
+        }
+
+        kosongkanForm();
+        loadData();
+        mainPanel.removeAll();
+        mainPanel.repaint();
+        mainPanel.revalidate();
+        mainPanel.add(dataPengguna);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+    }
+
+    private void dataTabel() {
+        mainPanel.setVisible(false);
+        tambahData.setVisible(true);
+
+        int row = jTablePengguna.getSelectedRow();
+        jLabel6.setText("Perbarui Data Pengguna");
+        tf_id.setEnabled(false);
+
+        tf_id.setText(jTablePengguna.getValueAt(row, 0).toString());
+        tf_nim.setText(jTablePengguna.getValueAt(row, 1).toString());
+        tf_nama.setText(jTablePengguna.getValueAt(row, 2).toString());
+        tf_jurusan.setText(jTablePengguna.getValueAt(row, 3).toString());
+        tf_tempat.setText(jTablePengguna.getValueAt(row, 4).toString());
+        tf_tanggal.setText(jTablePengguna.getValueAt(row, 5).toString());
+        tf_user.setText(jTablePengguna.getValueAt(row, 6).toString());
+        tf_pass.setText(jTablePengguna.getValueAt(row, 7).toString());
+        tf_alamat.setText(jTablePengguna.getValueAt(row, 8).toString());
+        String level = jTablePengguna.getValueAt(row, 9).toString();
+        cbLevel.setSelectedItem(level);
+        String jenis = jTablePengguna.getValueAt(row, 10).toString();
+        if (jenis.equals("Laki - laki")) {
+            rbLaki.setSelected(true);
+        } else if (jenis.equals("Perempuan")) {
+            rbPerempuan.setSelected(true);
+        }
+        tf_telp.setText(jTablePengguna.getValueAt(row, 11).toString());
+        tf_email.setText(jTablePengguna.getValueAt(row, 12).toString());
+    }
+
+    private void updateData() {
+        String id = tf_id.getText().trim();
+        String nim = tf_nim.getText();
+        String nama = tf_nama.getText();
+        String jurusan = tf_jurusan.getText();
+        String tempat = tf_tempat.getText();
+        String tanggal = tf_tanggal.getText();
+        String user = tf_user.getText();
+        String pass = tf_pass.getText();
+        String alamat = tf_alamat.getText();
+        String level = (String) cbLevel.getSelectedItem();
+        String jenis;
+        if (rbLaki.isSelected()) {
+            jenis = rbLaki.getText();
+        } else if (rbPerempuan.isSelected()) {
+            jenis = rbPerempuan.getText();
+        } else {
+            jenis = "";
+        }
+        String telp = tf_telp.getText();
+        String email = tf_email.getText();
+
+        if (id.isEmpty() || nim.isEmpty() || nama.isEmpty() || user.isEmpty() || pass.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Semua kolom harus diisi", "Validasi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("UASPBOPU");
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            Pengguna p = new Pengguna();
+            p.setIdPengguna(id);
+            p.setNim(nim);
+            p.setNama(nama);
+            p.setJurusan(jurusan);
+            p.setTempatLahir(tempat);
+            p.setTanggalLahir(tanggal);
+            p.setUsername(user);
+            p.setPassword(pass);
+            p.setAlamat(alamat);
+            p.setLevel(level);
+            p.setJenisKelamin(jenis);
+            p.setTelephone(telp);
+            p.setEmail(email);
+            em.getTransaction().begin();
+            em.merge(p);
+            em.getTransaction().commit();
+
+            JOptionPane.showMessageDialog(this, "Data Berhasil Diperbarui", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            JOptionPane.showMessageDialog(this, "Data Gagal Diperbarui: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+            kosongkanForm();
+            loadData();
+            showPanel();
+
+        }
+    }
+        
+    private void hapusData() {
+        int selectedRow = jTablePengguna.getSelectedRow();
+        int confirm = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin menghapus data?",
+                "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            String id = tf_id.getText().trim();
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("UASPBOPU");
+            EntityManager em = emf.createEntityManager();
+            try {
+                em.getTransaction().begin();
+                Pengguna p = new Pengguna();
+                p.setIdPengguna(id);
+                em.remove(p);
+                em.getTransaction().commit();
+
+                JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
+            } catch (Exception e) {
+                em.getTransaction().rollback();
+                JOptionPane.showMessageDialog(this, "Data Gagal Dihapus");
+            } finally {
+                em.close();
+            }
+            kosongkanForm();
+            loadData();
+            showPanel();
+        }
+    }
 }

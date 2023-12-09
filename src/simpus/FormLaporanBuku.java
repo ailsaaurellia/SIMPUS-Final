@@ -266,7 +266,7 @@ public class FormLaporanBuku extends javax.swing.JPanel {
 
         switch (cbCari.getSelectedIndex()) {
             case 1:
-                queryString += "LOWER(b.id) LIKE LOWER(:searchTerm)";
+                queryString += "LOWER(b.idBuku) LIKE LOWER(:searchTerm)";
                 break;
             case 2:
                 queryString += "LOWER(b.isbn) LIKE LOWER(:searchTerm)";
