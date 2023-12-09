@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import persisten.Buku;
 import persisten.Kategori;
-import static persisten.Kategori_.kategori;
 import tabelModel.TabelKategori;
 
 /**

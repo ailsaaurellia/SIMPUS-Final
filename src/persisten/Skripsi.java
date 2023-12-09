@@ -187,6 +187,7 @@ public class Skripsi implements Serializable {
     public String toString() {
         return "persisten.Skripsi[ idSkripsi=" + idSkripsi + " ]";
     }
+    
     public String getAllKategori() {
         String kategori = "";
         for (Kategori kat : this.kategoriCollection) {

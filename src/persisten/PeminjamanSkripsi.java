@@ -6,7 +6,6 @@
 package persisten;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -15,8 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,11 +28,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "PeminjamanSkripsi.findByNoPeminjamanSkripsi", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.peminjamanSkripsiPK.noPeminjamanSkripsi = :noPeminjamanSkripsi")
     , @NamedQuery(name = "PeminjamanSkripsi.findByJudulSkripsi", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.judulSkripsi = :judulSkripsi")
     , @NamedQuery(name = "PeminjamanSkripsi.findByStatusPeminjaman", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.statusPeminjaman = :statusPeminjaman")
-    , @NamedQuery(name = "PeminjamanSkripsi.findByTglPeminjamanSkripsi", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.tglPeminjamanSkripsi = :tglPeminjamanSkripsi")
-    , @NamedQuery(name = "PeminjamanSkripsi.findByTglKembaliSkripsi", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.tglKembaliSkripsi = :tglKembaliSkripsi")
     , @NamedQuery(name = "PeminjamanSkripsi.findByIdPengguna", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.peminjamanSkripsiPK.idPengguna = :idPengguna")
     , @NamedQuery(name = "PeminjamanSkripsi.findByAngkatan", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.angkatan = :angkatan")
-    , @NamedQuery(name = "PeminjamanSkripsi.findByIdSkripsi", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.peminjamanSkripsiPK.idSkripsi = :idSkripsi")})
+    , @NamedQuery(name = "PeminjamanSkripsi.findByIdSkripsi", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.peminjamanSkripsiPK.idSkripsi = :idSkripsi")
+    , @NamedQuery(name = "PeminjamanSkripsi.findByTanggalPinjam", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.tanggalPinjam = :tanggalPinjam")
+    , @NamedQuery(name = "PeminjamanSkripsi.findByTanggalKembali", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.tanggalKembali = :tanggalKembali")})
 public class PeminjamanSkripsi implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,14 +42,12 @@ public class PeminjamanSkripsi implements Serializable {
     private String judulSkripsi;
     @Column(name = "status_peminjaman")
     private String statusPeminjaman;
-    @Column(name = "tgl_peminjaman_skripsi")
-    @Temporal(TemporalType.DATE)
-    private Date tglPeminjamanSkripsi;
-    @Column(name = "tgl_kembali_skripsi")
-    @Temporal(TemporalType.DATE)
-    private Date tglKembaliSkripsi;
     @Column(name = "angkatan")
     private String angkatan;
+    @Column(name = "tanggal_pinjam")
+    private String tanggalPinjam;
+    @Column(name = "tanggal_kembali")
+    private String tanggalKembali;
     @JoinColumn(name = "id_pengguna", referencedColumnName = "id_pengguna", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Pengguna pengguna;
@@ -95,28 +90,28 @@ public class PeminjamanSkripsi implements Serializable {
         this.statusPeminjaman = statusPeminjaman;
     }
 
-    public Date getTglPeminjamanSkripsi() {
-        return tglPeminjamanSkripsi;
-    }
-
-    public void setTglPeminjamanSkripsi(Date tglPeminjamanSkripsi) {
-        this.tglPeminjamanSkripsi = tglPeminjamanSkripsi;
-    }
-
-    public Date getTglKembaliSkripsi() {
-        return tglKembaliSkripsi;
-    }
-
-    public void setTglKembaliSkripsi(Date tglKembaliSkripsi) {
-        this.tglKembaliSkripsi = tglKembaliSkripsi;
-    }
-
     public String getAngkatan() {
         return angkatan;
     }
 
     public void setAngkatan(String angkatan) {
         this.angkatan = angkatan;
+    }
+
+    public String getTanggalPinjam() {
+        return tanggalPinjam;
+    }
+
+    public void setTanggalPinjam(String tanggalPinjam) {
+        this.tanggalPinjam = tanggalPinjam;
+    }
+
+    public String getTanggalKembali() {
+        return tanggalKembali;
+    }
+
+    public void setTanggalKembali(String tanggalKembali) {
+        this.tanggalKembali = tanggalKembali;
     }
 
     public Pengguna getPengguna() {

@@ -272,7 +272,7 @@ public class GUIUtama extends javax.swing.JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
                 pnUtama.removeAll();
-                pnUtama.add(new FormPengguna());
+                pnUtama.add(new FormPengguna1());
                 pnUtama.repaint();
                 pnUtama.revalidate();
             }
