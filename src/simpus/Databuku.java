@@ -149,11 +149,6 @@ public class Databuku extends javax.swing.JDialog {
         });
 
         tf_penerbit.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(202, 50, 0)));
-        tf_penerbit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_penerbitActionPerformed(evt);
-            }
-        });
 
         tf_pengarang.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(202, 50, 0)));
 
@@ -195,14 +190,16 @@ public class Databuku extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tbl_kategori);
 
-        jButton1.setText("PILIH");
+        jButton1.setBackground(new java.awt.Color(122, 182, 218));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/cari.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("BATAL");
+        jButton2.setBackground(new java.awt.Color(239, 117, 117));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/x.png"))); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -316,7 +313,7 @@ public class Databuku extends javax.swing.JDialog {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jButton1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jButton2)))
                                 .addGap(87, 87, 87))))))
         );
 
@@ -407,10 +404,6 @@ public class Databuku extends javax.swing.JDialog {
     private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
         dispose();
     }//GEN-LAST:event_btn_batalActionPerformed
-
-    private void tf_penerbitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_penerbitActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_penerbitActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         DefaultTableModel tbl = (DefaultTableModel) tbl_kategori.getModel();

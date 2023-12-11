@@ -1,6 +1,5 @@
 package simpus;
 
-
 import java.awt.Menu;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,8 +14,6 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.JOptionPane;
 import persisten.Pengguna;
-
-
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -34,7 +31,7 @@ public class GUILogin extends javax.swing.JFrame {
         jTextUser.setText("");
         jPass.setText("");
     }
-    ArrayList<Pengguna> login;
+    ArrayList<Pengguna> pengguna;
 
     /**
      * Creates new form GUILogin
@@ -61,6 +58,7 @@ public class GUILogin extends javax.swing.JFrame {
         view = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextUser.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -126,17 +124,22 @@ public class GUILogin extends javax.swing.JFrame {
             query.setParameter("username", username);
             query.setParameter("password", password);
 
-            if (!query.getResultList().isEmpty()) {
+            List<Pengguna> results = query.getResultList();
+
+            if (!results.isEmpty()) {
+                Pengguna pengguna = results.get(0);
                 JOptionPane.showMessageDialog(this, "Login Berhasil");
 
-                new GUIUtama().setVisible(true);
+                if ("Petugas".equals(pengguna.getLevel())) {
+                    new GUIUtama().setVisible(true);
+                } else if ("Anggota".equals(pengguna.getLevel())) {
+                    new GUIUtama1().setVisible(true);
+                }
+
                 this.dispose();
-
                 kosongkan_form();
-
             } else {
                 JOptionPane.showMessageDialog(this, "Login Gagal, periksa email dan password Anda");
-
                 kosongkan_form();
             }
             em.getTransaction().commit();

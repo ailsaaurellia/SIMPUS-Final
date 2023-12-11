@@ -149,7 +149,7 @@ public class FormLaporanBuku extends javax.swing.JPanel {
         btCetak.setBackground(new java.awt.Color(255, 102, 102));
         btCetak.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btCetak.setForeground(new java.awt.Color(255, 255, 255));
-        btCetak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/hapus.png"))); // NOI18N
+        btCetak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/cetak.png"))); // NOI18N
         btCetak.setText("CETAK");
         btCetak.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {

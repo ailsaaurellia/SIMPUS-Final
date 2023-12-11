@@ -17,8 +17,7 @@ import persisten.Pengguna;
 public class TabelPengguna extends AbstractTableModel {
 
     private List<Pengguna> list = new ArrayList<>();
-    private final String[] columnNames = {"No", "ID Pengguna", "NIM", "Nama", "Jurusan",
-        "Username", "Telephone", "Level", "Alamat"};
+    private final String[] columnNames = {"No", "ID Pengguna", "Nama", "Level"};
 
     public void clear() {
         list.clear();
@@ -37,12 +36,12 @@ public class TabelPengguna extends AbstractTableModel {
     }
 
     public Pengguna getData(int index) {
-        return list.get(index);
+        return list.stream().filter(p -> "Anggota".equals(p.getLevel())).skip(index).findFirst().orElse(null);
     }
 
     @Override
     public int getRowCount() {
-        return list.size();
+        return (int) list.stream().filter(p -> "Anggota".equals(p.getLevel())).count();
     }
 
     @Override
@@ -59,19 +58,9 @@ public class TabelPengguna extends AbstractTableModel {
               case 0:
                     return list.get(rowIndex).getIdPengguna();   
               case 1:
-                    return list.get(rowIndex).getNim();   
+                    return list.get(rowIndex).getNama();
               case 2:
-                    return list.get(rowIndex).getNama();   
-              case 3:
-                    return list.get(rowIndex).getJurusan();   
-              case 4:
-                    return list.get(rowIndex).getUsername();   
-              case 5:
-                    return list.get(rowIndex).getTelephone();   
-              case 6:
-                    return list.get(rowIndex).getLevel();   
-              case 7:
-                    return list.get(rowIndex).getAlamat();   
+                return list.get(rowIndex).getLevel();
             
                 default:
                     return null;

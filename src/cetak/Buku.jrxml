@@ -3,8 +3,12 @@
 	<property name="ireport.zoom" value="1.3310000000000004"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="searchBy" class="java.lang.String"/>
-	<parameter name="querySearch" class="java.lang.String"/>
+	<parameter name="searchBy" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="querySearch" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
 		<![CDATA[select * from buku]]>
 	</queryString>
@@ -208,7 +212,7 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="31" splitType="Stretch">
 			<textField>
 				<reportElement x="303" y="0" width="85" height="30" uuid="7d04a818-204f-4b0f-9fb4-13fed12b45f0">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
@@ -308,7 +312,22 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="143" splitType="Stretch">
+			<staticText>
+				<reportElement x="455" y="31" width="35" height="17" uuid="5ace0c47-f2dc-4a06-b9aa-b1f61821f6e3"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Dosen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="14" width="67" height="17" uuid="8de317fa-c1d1-4cde-9bff-c59d827a4631"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Mengetauhi]]></text>
+			</staticText>
+		</band>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch"/>

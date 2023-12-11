@@ -19,12 +19,12 @@ import simpus.FormSkripsi;
  *
  * @author Ailsa
  */
-public class GUIUtama extends javax.swing.JFrame {
+public class GUIUtama1 extends javax.swing.JFrame {
 
     /**
      * Creates new form GUIUtama
      */
-    public GUIUtama() {
+    public GUIUtama1() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -51,7 +51,6 @@ public class GUIUtama extends javax.swing.JFrame {
         pnUtama = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1366, 768));
         setSize(new java.awt.Dimension(1366, 768));
 
         pnSidebar.setBackground(new java.awt.Color(255, 255, 255));
@@ -172,14 +171,16 @@ public class GUIUtama extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIUtama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIUtama1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIUtama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIUtama1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIUtama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIUtama1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIUtama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIUtama1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -187,7 +188,7 @@ public class GUIUtama extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new GUIUtama().setVisible(true);
+                new GUIUtama1().setVisible(true);
             }
         });
     }
@@ -246,14 +247,7 @@ public class GUIUtama extends javax.swing.JFrame {
                 pnUtama.revalidate();
             }
         });
-        MenuItem menuPinjamB = new MenuItem(null, true, IconBuku, "Pinjam Buku", new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                pnUtama.removeAll();
-                pnUtama.add(new FormPeminjamanBuku());
-                pnUtama.repaint();
-                pnUtama.revalidate();
-            }
-        });
+        MenuItem menuPinjamB = new MenuItem(null, true, IconBuku, "Pinjam Buku", null);
         MenuItem menuPinjamS = new MenuItem(null, true, IconSkripsi, "Pinjam Skripsi", null);
         MenuItem menuLBuku = new MenuItem(null, true, IconBuku, "Buku", new ActionListener() {
             public void actionPerformed(ActionEvent e) {

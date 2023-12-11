@@ -25,12 +25,12 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import persisten.Buku;
+
 /**
  *
  * @author Ailsa
  */
 public class FormBuku extends javax.swing.JPanel {
-    
 
     private IFBuku servis = new DaoBuku();
     private TabelBuku tblModel = new TabelBuku();
@@ -170,12 +170,6 @@ public class FormBuku extends javax.swing.JPanel {
             }
         });
 
-        tfCari.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tfCariKeyReleased(evt);
-            }
-        });
-
         cbCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Pilih --", "ID Buku", "ISBN", "Judul", "Kategori", "Pengarang", "Penerbit", "Tahun", "Jumlah Halaman" }));
         cbCari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 183, 137)));
 
@@ -197,7 +191,7 @@ public class FormBuku extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btBatal)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfCari, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfCari, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cbCari, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1101, Short.MAX_VALUE))
@@ -228,7 +222,7 @@ public class FormBuku extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTambahActionPerformed
-         if (btTambah.getText().equalsIgnoreCase("UBAH")) {
+        if (btTambah.getText().equalsIgnoreCase("UBAH")) {
             new Databuku(null, true, (String) jTableBuku.getValueAt(jTableBuku.getSelectedRow(), 1)).setVisible(true);
         } else {
             new Databuku(null, true).setVisible(true);
@@ -306,10 +300,6 @@ public class FormBuku extends javax.swing.JPanel {
         loadData();
     }//GEN-LAST:event_btBatalActionPerformed
 
-    private void tfCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCariKeyReleased
-
-    }//GEN-LAST:event_tfCariKeyReleased
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBatal;
@@ -351,42 +341,52 @@ public class FormBuku extends javax.swing.JPanel {
     }
 
     private void performSearch() {
-        String sc = tfCari.getText();
-        List<Buku> list = new ArrayList<>();
+        String searchTerm = tfCari.getText();
+        int searchByIndex = cbCari.getSelectedIndex();
 
-        if (sc.isEmpty()) {
-            list = servis.ambilData();
-        } else {
-            switch (cbCari.getSelectedIndex()) {
-                case 1:
-                    list = servis.getByID(sc);
+        EntityManager em = Persistence.createEntityManagerFactory("UASPBOPU").createEntityManager();
+        em.getTransaction().begin();
+
+        try {
+            List<Buku> filteredData;
+
+            // Modifikasi logika pencarian untuk menggunakan JPA
+            switch (searchByIndex) {
+                case 1: // ID Buku
+                    filteredData = servis.getByID(searchTerm);
                     break;
-                case 2:
-                    list = servis.getByISBN(sc);
+                case 2: // ISBN
+                    filteredData = servis.getByISBN(searchTerm);
                     break;
-                case 3:
-                    list = servis.getByJudul(sc);
+                case 3: // Judul
+                    filteredData = servis.getByJudul(searchTerm);
                     break;
-                case 4:
-                    list = servis.getByKategori(sc);
+                case 4: // Kategori
+                    filteredData = servis.getByKategori(searchTerm);
                     break;
-                case 5:
-                    list = servis.getByPengarang(sc);
+                case 5: // Pengarang
+                    filteredData = servis.getByPengarang(searchTerm);
                     break;
-                case 6:
-                    list = servis.getByPenerbit(sc);
+                case 6: // Penerbit
+                    filteredData = servis.getByPenerbit(searchTerm);
                     break;
-                case 7:
-                    list = servis.getByTahun(sc);
+                case 7: // Tahun
+                    filteredData = servis.getByTahun(searchTerm);
                     break;
-                case 8:
-                    list = servis.getByHalaman(sc);
+                case 8: // Halaman
+                    filteredData = servis.getByHalaman(searchTerm);
                     break;
-                // tambahkan case lain sesuai kebutuhan
+                default:
+                    // Handle default case or throw an exception
+                    filteredData = new ArrayList<>();
+                    break;
             }
-        }
 
-        tblModel.setData(list);
+            tblModel.setData(filteredData);
+        } finally {
+            em.getTransaction().commit();
+            em.close();
+        }
     }
 
 }

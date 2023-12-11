@@ -1,30 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package simpus;
 
-import Interfacej.IFKategori;
-import dao.DaoKategori;
+import Interfacej.IFBuku;
+import dao.DaoBuku;
 import java.util.List;
-import persisten.Kategori;
-import tabelModel.TabelKategori;
+import persisten.Buku;
+import tabelModel.TabelBuku;
 
 /**
  *
  * @author Ailsa
  */
-public class PilihKategori extends javax.swing.JDialog {
+public class PilihBuku extends javax.swing.JDialog {
 
-    private IFKategori servis = new DaoKategori();
-    private TabelKategori tbl = new TabelKategori();
-    public Kategori mod = new Kategori();
+    private IFBuku servis = new DaoBuku();
+    private TabelBuku tbl = new TabelBuku();
+    public Buku mod = new Buku();
 
-    public PilihKategori(java.awt.Frame parent, boolean modal) {
+    public PilihBuku(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        tblKategori.setModel(tbl);
+        tblBuku.setModel(tbl);
         loadData();
     }
 
@@ -42,7 +38,7 @@ public class PilihKategori extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblKategori = new javax.swing.JTable();
+        tblBuku = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         tfCari = new javax.swing.JTextField();
 
@@ -78,7 +74,7 @@ public class PilihKategori extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        tblKategori.setModel(new javax.swing.table.DefaultTableModel(
+        tblBuku.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -89,12 +85,12 @@ public class PilihKategori extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblKategori.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblBuku.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblKategoriMouseClicked(evt);
+                tblBukuMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblKategori);
+        jScrollPane1.setViewportView(tblBuku);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/IconKategori.png"))); // NOI18N
 
@@ -147,10 +143,10 @@ public class PilihKategori extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblKategoriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKategoriMouseClicked
-        mod = servis.getById(tblKategori.getValueAt(tblKategori.getSelectedRow(), 1).toString());
+    private void tblBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBukuMouseClicked
+        mod = servis.getById(tblBuku.getValueAt(tblBuku.getSelectedRow(), 1).toString());
         dispose();
-    }//GEN-LAST:event_tblKategoriMouseClicked
+    }//GEN-LAST:event_tblBukuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -169,20 +165,21 @@ public class PilihKategori extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PilihKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PilihBuku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PilihKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PilihBuku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PilihKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PilihBuku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PilihKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PilihBuku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PilihKategori dialog = new PilihKategori(new javax.swing.JFrame(), true);
+                PilihBuku dialog = new PilihBuku(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -201,18 +198,18 @@ public class PilihKategori extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblKategori;
+    private javax.swing.JTable tblBuku;
     private javax.swing.JTextField tfCari;
     // End of variables declaration//GEN-END:variables
 
     private void loadData() {
-        List<Kategori> list = servis.ambilData();
+        List<Buku> list = servis.ambilData();
         tbl.setData(list);
         jLabel1.requestFocus();
     }
 
     private void pilihData() {
-        int row = tblKategori.getSelectedRow();
+        int row = tblBuku.getSelectedRow();
 
     }
 }

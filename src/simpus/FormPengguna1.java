@@ -199,18 +199,13 @@ public class FormPengguna1 extends javax.swing.JPanel {
         });
 
         tfCari.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tfCariKeyReleased(evt);
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfCariKeyTyped(evt);
             }
         });
 
         cbCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Pilih --", "ID Pengguna", "NIM", "Nama", "Jurusan", "Username", "Telephone", "Level", "Alamat" }));
         cbCari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 183, 137)));
-        cbCari.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCariActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout dataPenggunaLayout = new javax.swing.GroupLayout(dataPengguna);
         dataPengguna.setLayout(dataPenggunaLayout);
@@ -232,7 +227,7 @@ public class FormPengguna1 extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btBatal)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfCari, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfCari, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cbCari, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE))
@@ -253,7 +248,7 @@ public class FormPengguna1 extends javax.swing.JPanel {
                         .addComponent(tfCari, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(cbCari, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
                 .addGap(40, 40, 40))
         );
 
@@ -319,6 +314,7 @@ public class FormPengguna1 extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(202, 50, 0));
         jLabel5.setText("Level");
 
+        tf_id.setEditable(false);
         tf_id.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         tf_id.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tf_id.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(202, 50, 0)));
@@ -337,16 +333,6 @@ public class FormPengguna1 extends javax.swing.JPanel {
         tf_tanggal.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         tf_tanggal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tf_tanggal.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(202, 50, 0)));
-        tf_tanggal.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tf_tanggalMouseClicked(evt);
-            }
-        });
-        tf_tanggal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_tanggalActionPerformed(evt);
-            }
-        });
         tf_tanggal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_tanggalKeyTyped(evt);
@@ -355,22 +341,12 @@ public class FormPengguna1 extends javax.swing.JPanel {
 
         tf_tempat.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         tf_tempat.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(202, 50, 0)));
-        tf_tempat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_tempatActionPerformed(evt);
-            }
-        });
 
         tf_jurusan.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         tf_jurusan.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(202, 50, 0)));
 
         tf_alamat.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         tf_alamat.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(202, 50, 0)));
-        tf_alamat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_alamatActionPerformed(evt);
-            }
-        });
 
         cbLevel.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         cbLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Anggota", "Petugas" }));
@@ -385,11 +361,6 @@ public class FormPengguna1 extends javax.swing.JPanel {
 
         tf_telp.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         tf_telp.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(202, 50, 0)));
-        tf_telp.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tf_telpKeyTyped(evt);
-            }
-        });
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(202, 50, 0));
@@ -397,11 +368,6 @@ public class FormPengguna1 extends javax.swing.JPanel {
 
         tf_email.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         tf_email.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(202, 50, 0)));
-        tf_email.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tf_emailKeyTyped(evt);
-            }
-        });
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(202, 50, 0));
@@ -409,19 +375,9 @@ public class FormPengguna1 extends javax.swing.JPanel {
 
         tf_user.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tf_user.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(202, 50, 0)));
-        tf_user.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tf_userKeyTyped(evt);
-            }
-        });
 
         tf_pass.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         tf_pass.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(202, 50, 0)));
-        tf_pass.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tf_passKeyTyped(evt);
-            }
-        });
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(202, 50, 0));
@@ -558,7 +514,7 @@ public class FormPengguna1 extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_email, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tf_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 213, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout tambahDataLayout = new javax.swing.GroupLayout(tambahData);
@@ -588,7 +544,7 @@ public class FormPengguna1 extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tambahDataLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 738, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 525, Short.MAX_VALUE)
                 .addGroup(tambahDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -675,6 +631,8 @@ public class FormPengguna1 extends javax.swing.JPanel {
     private void jTablePenggunaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePenggunaMouseClicked
         if (btTambah.getText().equals("TAMBAH")) {
             btTambah.setText("UBAH");
+            ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/edit.png"));
+            btTambah.setIcon(icon);
             btHapus.setVisible(true);
             btBatal.setVisible(true);
         }
@@ -684,10 +642,6 @@ public class FormPengguna1 extends javax.swing.JPanel {
         showPanel();
         loadData();
     }//GEN-LAST:event_btBatalActionPerformed
-
-    private void tfCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCariKeyReleased
-
-    }//GEN-LAST:event_tfCariKeyReleased
 
     private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
         showPanel();
@@ -717,41 +671,9 @@ public class FormPengguna1 extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tf_tanggalKeyTyped
 
-    private void tf_tempatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_tempatActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_tempatActionPerformed
-
-    private void tf_tanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_tanggalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_tanggalActionPerformed
-
-    private void tf_tanggalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_tanggalMouseClicked
-
-    }//GEN-LAST:event_tf_tanggalMouseClicked
-
-    private void tf_alamatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_alamatActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_alamatActionPerformed
-
-    private void tf_telpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_telpKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_telpKeyTyped
-
-    private void tf_emailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_emailKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_emailKeyTyped
-
-    private void tf_userKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_userKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_userKeyTyped
-
-    private void tf_passKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_passKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_passKeyTyped
-
-    private void cbCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCariActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbCariActionPerformed
+    private void tfCariKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCariKeyTyped
+        searchData();
+    }//GEN-LAST:event_tfCariKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1085,7 +1007,7 @@ public class FormPengguna1 extends javax.swing.JPanel {
 
         }
     }
-        
+
     private void hapusData() {
         int selectedRow = jTablePengguna.getSelectedRow();
         int confirm = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin menghapus data?",
@@ -1113,5 +1035,92 @@ public class FormPengguna1 extends javax.swing.JPanel {
             loadData();
             showPanel();
         }
+    }
+
+    private void searchData() {
+        try {
+            String selection = (String) cbCari.getSelectedItem();
+            String searchTerm = tfCari.getText();
+
+            // Building the JPA query dynamically based on the selected criteria
+            String queryString = "SELECT p FROM Pengguna p WHERE ";
+
+            switch (selection.toLowerCase()) {
+                case "ID Pengguna":
+                    queryString += "LOWER(p.idPengguna) LIKE LOWER(:searchTerm)";
+                    break;
+                case "NIM":
+                    queryString += "LOWER(p.nim) LIKE LOWER(:searchTerm)";
+                    break;
+                case "Nama":
+                    queryString += "LOWER(p.nama) LIKE LOWER(:searchTerm)";
+                    break;
+                case "Jurusan":
+                    queryString += "LOWER(p.jurusan) LIKE LOWER(:searchTerm)";
+                    break;
+                case "Username":
+                    queryString += "LOWER(p.username) LIKE LOWER(:searchTerm)";
+                    break;
+                case "Telephone":
+                    queryString += "LOWER(p.telephone) LIKE LOWER(:searchTerm)";
+                    break;
+                case "Level":
+                    queryString += "LOWER(p.level) LIKE LOWER(:searchTerm)";
+                    break;
+                case "Alamat":
+                    queryString += "LOWER(p.alamat) LIKE LOWER(:searchTerm)";
+                    break;
+                default:
+                    queryString += "LOWER(p.idPengguna) LIKE LOWER(:searchTerm)"
+                            + " OR LOWER(p.nim) LIKE LOWER(:searchTerm)"
+                            + " OR LOWER(p.nama) LIKE LOWER(:searchTerm)"
+                            + " OR LOWER(p.jurusan) LIKE LOWER(:searchTerm)"
+                            + " OR LOWER(p.username) LIKE LOWER(:searchTerm)"
+                            + " OR LOWER(p.telephone) LIKE LOWER(:searchTerm)"
+                            + " OR LOWER(p.level) LIKE LOWER(:searchTerm)"
+                            + " OR LOWER(p.alamat) LIKE LOWER(:searchTerm)";
+                    break;
+            }
+            DefaultTableModel model = (DefaultTableModel) jTablePengguna.getModel();
+            model.setRowCount(0);
+
+            EntityManager em = null;
+            try {
+                EntityManagerFactory emf = Persistence.createEntityManagerFactory("UASPBOPU");
+                em = emf.createEntityManager();
+
+                TypedQuery<Pengguna> query = em.createQuery(queryString, Pengguna.class);
+                query.setParameter("searchTerm", "%" + searchTerm + "%");
+
+                List<Pengguna> results = query.getResultList();
+
+                for (Pengguna pengguna : results) {
+                    // Tambahkan baris ke model berdasarkan data pengguna
+                    model.addRow(new Object[]{
+                        pengguna.getIdPengguna(),
+                        pengguna.getNim(),
+                        pengguna.getNama(),
+                        pengguna.getJurusan(),
+                        pengguna.getTempatLahir(),
+                        pengguna.getTanggalLahir(),
+                        pengguna.getUsername(),
+                        pengguna.getPassword(),
+                        pengguna.getAlamat(),
+                        pengguna.getLevel(),
+                        pengguna.getJenisKelamin(),
+                        pengguna.getTelephone(),
+                        pengguna.getEmail(),});
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                if (em != null && em.isOpen()) {
+                    em.close();
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
 }

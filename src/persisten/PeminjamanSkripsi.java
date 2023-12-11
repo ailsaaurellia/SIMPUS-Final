@@ -32,7 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "PeminjamanSkripsi.findByAngkatan", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.angkatan = :angkatan")
     , @NamedQuery(name = "PeminjamanSkripsi.findByIdSkripsi", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.peminjamanSkripsiPK.idSkripsi = :idSkripsi")
     , @NamedQuery(name = "PeminjamanSkripsi.findByTanggalPinjam", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.tanggalPinjam = :tanggalPinjam")
-    , @NamedQuery(name = "PeminjamanSkripsi.findByTanggalKembali", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.tanggalKembali = :tanggalKembali")})
+    , @NamedQuery(name = "PeminjamanSkripsi.findByTanggalKembali", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.tanggalKembali = :tanggalKembali")
+    , @NamedQuery(name = "PeminjamanSkripsi.findByNama", query = "SELECT p FROM PeminjamanSkripsi p WHERE p.nama = :nama")})
 public class PeminjamanSkripsi implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,6 +49,8 @@ public class PeminjamanSkripsi implements Serializable {
     private String tanggalPinjam;
     @Column(name = "tanggal_kembali")
     private String tanggalKembali;
+    @Column(name = "nama")
+    private String nama;
     @JoinColumn(name = "id_pengguna", referencedColumnName = "id_pengguna", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Pengguna pengguna;
@@ -153,6 +156,14 @@ public class PeminjamanSkripsi implements Serializable {
     @Override
     public String toString() {
         return "persisten.PeminjamanSkripsi[ peminjamanSkripsiPK=" + peminjamanSkripsiPK + " ]";
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
     }
     
 }

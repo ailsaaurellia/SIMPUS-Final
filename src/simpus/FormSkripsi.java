@@ -1,6 +1,5 @@
 package simpus;
 
-
 import Interfacej.IFSkripsi;
 import dao.DaoSkripsi;
 import java.awt.Color;
@@ -25,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import persisten.Skripsi;
 import tabelModel.TabelSkripsi;
+
 /**
  *
  * @author Ailsa
@@ -39,8 +39,8 @@ public class FormSkripsi extends javax.swing.JPanel {
         jTableBuku.setModel(tblModel);
         loadData();
         setColWidht();
-        
-         tfCari.getDocument().addDocumentListener(new DocumentListener() {
+
+        tfCari.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 performSearch();
@@ -56,7 +56,7 @@ public class FormSkripsi extends javax.swing.JPanel {
                 // Plain text components do not fire these events
             }
         });
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -170,12 +170,6 @@ public class FormSkripsi extends javax.swing.JPanel {
             }
         });
 
-        tfCari.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tfCariKeyReleased(evt);
-            }
-        });
-
         cbCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Pilih --", "ID Skripsi", "Judul", "Bahasa", "Fakultas", "Program Studi", "Tahun", "Penulis", "Pembimbing", "Jumlah Halaman", "Kategori" }));
         cbCari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 183, 137)));
 
@@ -199,7 +193,7 @@ public class FormSkripsi extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btBatal)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfCari, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfCari, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cbCari, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE))
@@ -305,12 +299,8 @@ public class FormSkripsi extends javax.swing.JPanel {
     }//GEN-LAST:event_jTableBukuMouseClicked
 
     private void btBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBatalActionPerformed
-         loadData();
+        loadData();
     }//GEN-LAST:event_btBatalActionPerformed
-
-    private void tfCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCariKeyReleased
-
-    }//GEN-LAST:event_tfCariKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -327,8 +317,8 @@ public class FormSkripsi extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void setColWidht() {
-        int[] noCol = {0, 1, 2, 7, 8};
-        int[] noColW = {40, 80, 150, 80, 80};
+        int[] noCol = {0};
+        int[] noColW = {60};
 
         TableColumnModel tblModel = jTableBuku.getColumnModel();
         for (int i = 0; i < noCol.length; i++) {
@@ -337,6 +327,7 @@ public class FormSkripsi extends javax.swing.JPanel {
             tblModel.getColumn(noCol[i]).setMinWidth(noColW[i]);
         }
     }
+
     private void loadData() {
         List<Skripsi> list = servis.ambilData();
         tblModel.setData(list);
@@ -350,50 +341,59 @@ public class FormSkripsi extends javax.swing.JPanel {
         jLabel1.requestFocus();
 
     }
-    
-    private void performSearch() {
-        String sc = tfCari.getText();
-        List<Skripsi> list = new ArrayList<>();
 
-        if (sc.isEmpty()) {
-            list = servis.ambilData();
-        } else {
-            switch (cbCari.getSelectedIndex()) {
+    private void performSearch() {
+        String searchTerm = tfCari.getText();
+        int searchByIndex = cbCari.getSelectedIndex();
+
+        EntityManager em = Persistence.createEntityManagerFactory("UASPBOPU").createEntityManager();
+        em.getTransaction().begin();
+
+        try {
+            List<Skripsi> filteredData;
+
+            switch (searchByIndex) {
                 case 1:
-                    list = servis.getByID(sc);
+                    filteredData = servis.getByID(searchTerm);
                     break;
                 case 2:
-                    list = servis.getByJudul(sc);
+                    filteredData = servis.getByJudul(searchTerm);
                     break;
                 case 3:
-                    list = servis.getByBahasa(sc);
+                    filteredData = servis.getByBahasa(searchTerm);
                     break;
                 case 4:
-                    list = servis.getByFakultas(sc);
+                    filteredData = servis.getByFakultas(searchTerm);
                     break;
                 case 5:
-                    list = servis.getByProdi(sc);
+                    filteredData = servis.getByProdi(searchTerm);
                     break;
                 case 6:
-                    list = servis.getByTahun(sc);
+                    filteredData = servis.getByTahun(searchTerm);
                     break;
                 case 7:
-                    list = servis.getByPenulis(sc);
+                    filteredData = servis.getByPenulis(searchTerm);
                     break;
                 case 8:
-                    list = servis.getByPembimbing(sc);
+                    filteredData = servis.getByPembimbing(searchTerm);
                     break;
                 case 9:
-                    list = servis.getByHalaman(sc);
+                    filteredData = servis.getByHalaman(searchTerm);
                     break;
                 case 10:
-                    list = servis.getByKategori(sc);
+                    filteredData = servis.getByKategori(searchTerm);
                     break;
-                // tambahkan case lain sesuai kebutuhan
+                default:
+                    // Handle default case or throw an exception
+                    filteredData = new ArrayList<>();
+                    break;
             }
-        }
 
-        tblModel.setData(list);
+            tblModel.setData(filteredData);
+        } finally {
+            em.getTransaction().commit();
+            em.close();
+        }
     }
 
 }

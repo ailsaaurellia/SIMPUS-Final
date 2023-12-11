@@ -5,26 +5,26 @@
  */
 package simpus;
 
-import Interfacej.IFKategori;
-import dao.DaoKategori;
+import Interfacej.IFPengguna;
+import dao.DaoPengguna;
 import java.util.List;
-import persisten.Kategori;
-import tabelModel.TabelKategori;
+import persisten.Pengguna;
+import tabelModel.TabelPengguna;
 
 /**
  *
  * @author Ailsa
  */
-public class PilihKategori extends javax.swing.JDialog {
+public class PilihAnggota extends javax.swing.JDialog {
 
-    private IFKategori servis = new DaoKategori();
-    private TabelKategori tbl = new TabelKategori();
-    public Kategori mod = new Kategori();
+    private IFPengguna servis = new DaoPengguna();
+    private TabelPengguna tbl = new TabelPengguna();
+    public Pengguna mod = new Pengguna();
 
-    public PilihKategori(java.awt.Frame parent, boolean modal) {
+    public PilihAnggota(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        tblKategori.setModel(tbl);
+        tblPengguna.setModel(tbl);
         loadData();
     }
 
@@ -42,7 +42,7 @@ public class PilihKategori extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblKategori = new javax.swing.JTable();
+        tblPengguna = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         tfCari = new javax.swing.JTextField();
 
@@ -55,14 +55,14 @@ public class PilihKategori extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("DATA KATEGORI");
+        jLabel1.setText("DATA ANGGOTA");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(185, Short.MAX_VALUE)
+                .addContainerGap(189, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(181, 181, 181))
         );
@@ -78,7 +78,7 @@ public class PilihKategori extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        tblKategori.setModel(new javax.swing.table.DefaultTableModel(
+        tblPengguna.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -89,12 +89,12 @@ public class PilihKategori extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblKategori.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblPengguna.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblKategoriMouseClicked(evt);
+                tblPenggunaMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblKategori);
+        jScrollPane1.setViewportView(tblPengguna);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/IconKategori.png"))); // NOI18N
 
@@ -147,10 +147,10 @@ public class PilihKategori extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblKategoriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKategoriMouseClicked
-        mod = servis.getById(tblKategori.getValueAt(tblKategori.getSelectedRow(), 1).toString());
+    private void tblPenggunaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPenggunaMouseClicked
+        mod = servis.getById(tblPengguna.getValueAt(tblPengguna.getSelectedRow(), 1).toString());
         dispose();
-    }//GEN-LAST:event_tblKategoriMouseClicked
+    }//GEN-LAST:event_tblPenggunaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -169,20 +169,21 @@ public class PilihKategori extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PilihKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PilihAnggota.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PilihKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PilihAnggota.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PilihKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PilihAnggota.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PilihKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PilihAnggota.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PilihKategori dialog = new PilihKategori(new javax.swing.JFrame(), true);
+                PilihAnggota dialog = new PilihAnggota(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -201,18 +202,22 @@ public class PilihKategori extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblKategori;
+    private javax.swing.JTable tblPengguna;
     private javax.swing.JTextField tfCari;
     // End of variables declaration//GEN-END:variables
 
     private void loadData() {
-        List<Kategori> list = servis.ambilData();
+        List<Pengguna> list = servis.ambilData();
         tbl.setData(list);
         jLabel1.requestFocus();
     }
 
     private void pilihData() {
-        int row = tblKategori.getSelectedRow();
+        int row = tblPengguna.getSelectedRow();
 
+    }
+
+    public Pengguna getPenggunaTerpilih() {
+        return mod;
     }
 }

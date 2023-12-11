@@ -73,7 +73,7 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="btBatal" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="tfCari" min="-2" pref="171" max="-2" attributes="0"/>
+                                      <Component id="tfCari" min="-2" pref="289" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="cbCari" min="-2" pref="141" max="-2" attributes="0"/>
                                   </Group>
@@ -215,9 +215,6 @@
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="tfCari">
-              <Events>
-                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfCariKeyReleased"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="cbCari">
               <Properties>
