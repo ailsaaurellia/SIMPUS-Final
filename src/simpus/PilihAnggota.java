@@ -96,7 +96,7 @@ public class PilihAnggota extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblPengguna);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/IconKategori.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/IconPengguna.png"))); // NOI18N
 
         tfCari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 183, 137), 2));
 
