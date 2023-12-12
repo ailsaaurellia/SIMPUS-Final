@@ -63,7 +63,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
         mainPanel = new javax.swing.JPanel();
         dataPeminjaman = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTablePengguna = new javax.swing.JTable();
+        jTablePinjam = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         btBatal = new javax.swing.JButton();
         btTambah = new javax.swing.JButton();
@@ -114,7 +114,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
         dataPeminjaman.setBackground(new java.awt.Color(255, 255, 255));
         dataPeminjaman.setPreferredSize(new java.awt.Dimension(983, 638));
 
-        jTablePengguna.setModel(new javax.swing.table.DefaultTableModel(
+        jTablePinjam.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -125,12 +125,12 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
 
             }
         ));
-        jTablePengguna.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTablePinjam.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTablePenggunaMouseClicked(evt);
+                jTablePinjamMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTablePengguna);
+        jScrollPane1.setViewportView(jTablePinjam);
 
         jLabel1.setBackground(new java.awt.Color(255, 204, 204));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -569,7 +569,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
     }//GEN-LAST:event_btTambahActionPerformed
 
     private void btHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHapusActionPerformed
-        String s = (String) jTablePengguna.getValueAt(jTablePengguna.getSelectedRow(), 1);
+        String s = (String) jTablePinjam.getValueAt(jTablePinjam.getSelectedRow(), 1);
         ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/hapus.png"));
         hapusData();
         loadData();
@@ -622,7 +622,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
         btBatal.setIcon(icon);
     }//GEN-LAST:event_btBatalMouseExited
 
-    private void jTablePenggunaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePenggunaMouseClicked
+    private void jTablePinjamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePinjamMouseClicked
         if (btTambah.getText().equals("TAMBAH")) {
             btTambah.setText("UBAH");
             ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/edit.png"));
@@ -630,7 +630,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
             btHapus.setVisible(true);
             btBatal.setVisible(true);
         }
-    }//GEN-LAST:event_jTablePenggunaMouseClicked
+    }//GEN-LAST:event_jTablePinjamMouseClicked
 
     private void btBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBatalActionPerformed
         showPanel();
@@ -728,7 +728,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTablePengguna;
+    private javax.swing.JTable jTablePinjam;
     private javax.swing.JPanel mainPanel;
     private com.raven.datechooser.SelectedDate selectedDate1;
     private javax.swing.JPanel tambahData;
@@ -744,7 +744,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void loadData() {
-        getData((DefaultTableModel) jTablePengguna.getModel());
+        getData((DefaultTableModel) jTablePinjam.getModel());
         if (btTambah.getText().equalsIgnoreCase("UBAH")) {
             btTambah.setText("TAMBAH");
             ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/tambah.png"));
@@ -777,7 +777,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
     }
 
     private void setTabelModel() {
-        DefaultTableModel model = (DefaultTableModel) jTablePengguna.getModel();
+        DefaultTableModel model = (DefaultTableModel) jTablePinjam.getModel();
         model.addColumn("NO Peminjaman");
         model.addColumn("ID Anggota");
         model.addColumn("Nama");
@@ -900,20 +900,20 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
         mainPanel.setVisible(false);
         tambahData.setVisible(true);
 
-        int row = jTablePengguna.getSelectedRow();
+        int row = jTablePinjam.getSelectedRow();
         jLabel6.setText("Perbarui Data Pengguna");
         tf_no.setEnabled(false);
-        tf_no.setText(jTablePengguna.getValueAt(row, 0).toString());
-        tf_idAng.setText(jTablePengguna.getValueAt(row, 1).toString());
-        tf_nama.setText(jTablePengguna.getValueAt(row, 2).toString());
-        String angkatan = jTablePengguna.getValueAt(row, 3).toString();
+        tf_no.setText(jTablePinjam.getValueAt(row, 0).toString());
+        tf_idAng.setText(jTablePinjam.getValueAt(row, 1).toString());
+        tf_nama.setText(jTablePinjam.getValueAt(row, 2).toString());
+        String angkatan = jTablePinjam.getValueAt(row, 3).toString();
         cb_ang.setSelectedItem(angkatan);
-        tf_idBuku.setText(jTablePengguna.getValueAt(row, 4).toString());
-        tf_judul.setText(jTablePengguna.getValueAt(row, 5).toString());
-        String status = jTablePengguna.getValueAt(row, 6).toString();
+        tf_idBuku.setText(jTablePinjam.getValueAt(row, 4).toString());
+        tf_judul.setText(jTablePinjam.getValueAt(row, 5).toString());
+        String status = jTablePinjam.getValueAt(row, 6).toString();
         cb_status.setSelectedItem(status);
-        tf_tPinjam.setText(jTablePengguna.getValueAt(row, 7).toString());
-        tf_tKembali.setText(jTablePengguna.getValueAt(row, 8).toString());
+        tf_tPinjam.setText(jTablePinjam.getValueAt(row, 7).toString());
+        tf_tKembali.setText(jTablePinjam.getValueAt(row, 8).toString());
         DefaultTableModel tblBukuModel = (DefaultTableModel) tbl_buku.getModel();
         tblBukuModel.setRowCount(0);
     }
@@ -1014,7 +1014,32 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
     }
 
     private void hapusData() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int selectedRow = jTablePinjam.getSelectedRow();
+        int confirm = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin menghapus data?",
+                "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            String no = tf_no.getText().trim();
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("UASPBOPU");
+            EntityManager em = emf.createEntityManager();
+            try {
+                em.getTransaction().begin();
+                PeminjamanBukuPK peminjamanPK = new PeminjamanBukuPK();
+                peminjamanPK.setNoPeminjaman(no);
+                em.remove(peminjamanPK);
+                em.getTransaction().commit();
+
+                JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
+            } catch (Exception e) {
+                em.getTransaction().rollback();
+                JOptionPane.showMessageDialog(this, "Data Gagal Dihapus");
+            } finally {
+                em.close();
+            }
+            kosongkanForm();
+            loadData();
+            showPanel();
+        }
     }
 
 }
