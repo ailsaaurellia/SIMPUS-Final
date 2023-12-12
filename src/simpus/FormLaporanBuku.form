@@ -178,16 +178,15 @@
             <Component class="javax.swing.JComboBox" name="cbCari">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="9">
+                  <StringArray count="8">
                     <StringItem index="0" value="-- Pilih --"/>
                     <StringItem index="1" value="ID Buku"/>
                     <StringItem index="2" value="ISBN"/>
                     <StringItem index="3" value="Judul"/>
-                    <StringItem index="4" value="Kategori"/>
-                    <StringItem index="5" value="Pengarang"/>
-                    <StringItem index="6" value="Penerbit"/>
-                    <StringItem index="7" value="Tahun"/>
-                    <StringItem index="8" value="Jumlah Halaman"/>
+                    <StringItem index="4" value="Pengarang"/>
+                    <StringItem index="5" value="Penerbit"/>
+                    <StringItem index="6" value="Tahun"/>
+                    <StringItem index="7" value="Jumlah Halaman"/>
                   </StringArray>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

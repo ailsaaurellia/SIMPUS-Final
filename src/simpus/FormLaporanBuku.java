@@ -143,7 +143,7 @@ public class FormLaporanBuku extends javax.swing.JPanel {
             }
         });
 
-        cbCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Pilih --", "ID Buku", "ISBN", "Judul", "Kategori", "Pengarang", "Penerbit", "Tahun", "Jumlah Halaman" }));
+        cbCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Pilih --", "ID Buku", "ISBN", "Judul", "Pengarang", "Penerbit", "Tahun", "Jumlah Halaman" }));
         cbCari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(229, 183, 137)));
 
         btCetak.setBackground(new java.awt.Color(255, 102, 102));
@@ -257,7 +257,7 @@ public class FormLaporanBuku extends javax.swing.JPanel {
 
     private void btCetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCetakActionPerformed
 
-        String reportPath = "src/cetak/Buku.jrxml";
+        String reportPath = "src/cetak/Book.jrxml";
         String selection = (String) cbCari.getSelectedItem();
         String searchTerm = tfCari.getText().trim();
 
@@ -275,18 +275,15 @@ public class FormLaporanBuku extends javax.swing.JPanel {
                 queryString += "LOWER(b.judul) LIKE LOWER(:searchTerm)";
                 break;
             case 4:
-                queryString += "LOWER(b.kategori) LIKE LOWER(:searchTerm)";
-                break;
-            case 5:
                 queryString += "LOWER(b.pengarang) LIKE LOWER(:searchTerm)";
                 break;
-            case 6:
+            case 5:
                 queryString += "LOWER(b.penerbit) LIKE LOWER(:searchTerm)";
                 break;
-            case 7:
+            case 6:
                 queryString += "LOWER(b.tahun) LIKE LOWER(:searchTerm)";
                 break;
-            case 8:
+            case 7:
                 queryString += "LOWER(b.halaman) LIKE LOWER(:searchTerm)";
                 break;
             default:
@@ -312,7 +309,6 @@ public class FormLaporanBuku extends javax.swing.JPanel {
                 result.getIdBuku(),
                 result.getIsbn(),
                 result.getJudul(),
-                result.getAllKategori(),
                 result.getPengarang(),
                 result.getPenerbit(),
                 result.getTahun(),
@@ -338,7 +334,7 @@ public class FormLaporanBuku extends javax.swing.JPanel {
         } catch (JRException e) {
             e.printStackTrace();
         }
-            // Handle kesalahan jika terjadi
+        // Handle kesalahan jika terjadi
 
     }//GEN-LAST:event_btCetakActionPerformed
 
@@ -376,42 +372,52 @@ public class FormLaporanBuku extends javax.swing.JPanel {
     }
 
     private void performSearch() {
-        String sc = tfCari.getText();
-        List<Buku> list = new ArrayList<>();
+        String searchTerm = tfCari.getText();
+        int searchByIndex = cbCari.getSelectedIndex();
 
-        if (sc.isEmpty()) {
-            list = servis.ambilData();
-        } else {
-            switch (cbCari.getSelectedIndex()) {
-                case 1:
-                    list = servis.getByID(sc);
+        EntityManager em = Persistence.createEntityManagerFactory("UASPBOPU").createEntityManager();
+        em.getTransaction().begin();
+
+        try {
+            List<Buku> filteredData;
+
+            // Modifikasi logika pencarian untuk menggunakan JPA
+            switch (searchByIndex) {
+                case 1: // ID Buku
+                    filteredData = servis.getByID(searchTerm);
                     break;
-                case 2:
-                    list = servis.getByISBN(sc);
+                case 2: // ISBN
+                    filteredData = servis.getByISBN(searchTerm);
                     break;
-                case 3:
-                    list = servis.getByJudul(sc);
+                case 3: // Judul
+                    filteredData = servis.getByJudul(searchTerm);
                     break;
-                case 4:
-                    list = servis.getByKategori(sc);
+                case 4: // Kategori
+                    filteredData = servis.getByKategori(searchTerm);
                     break;
-                case 5:
-                    list = servis.getByPengarang(sc);
+                case 5: // Pengarang
+                    filteredData = servis.getByPengarang(searchTerm);
                     break;
-                case 6:
-                    list = servis.getByPenerbit(sc);
+                case 6: // Penerbit
+                    filteredData = servis.getByPenerbit(searchTerm);
                     break;
-                case 7:
-                    list = servis.getByTahun(sc);
+                case 7: // Tahun
+                    filteredData = servis.getByTahun(searchTerm);
                     break;
-                case 8:
-                    list = servis.getByHalaman(sc);
+                case 8: // Halaman
+                    filteredData = servis.getByHalaman(searchTerm);
                     break;
-                // tambahkan case lain sesuai kebutuhan
+                default:
+                    // Handle default case or throw an exception
+                    filteredData = new ArrayList<>();
+                    break;
             }
-        }
 
-        tblModel.setData(list);
+            tblModel.setData(filteredData);
+        } finally {
+            em.getTransaction().commit();
+            em.close();
+        }
     }
 
 }

@@ -29,63 +29,23 @@ import persisten.Buku;
 public class DaoLaporan  implements IFLaporan{
    
     private IFBuku servisB = new DaoBuku();
-    private IFSkripsi servisS = new DaoSkripsi();
-    private IFKategori servisK = new DaoKategori();
-
-
+    
+    public DaoLaporan(IFBuku servisB) {
+        this.servisB = servisB;
+    }
+   
     @Override
-    public JasperPrint cetakBuku(JPanel jp) {
-        String reportPath = "src/report/LaporanBuku.jrxml";
+    public JasperPrint cetakBuku() {
+        String reportPath = "src/report/Book.jrxml";
         List<Buku> result = servisB.ambilData();
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(result);
         JasperPrint print = null;
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport(reportPath);
             print = JasperFillManager.fillReport(jasperReport, null, dataSource);
-            jp.removeAll();
-            jp.setLayout(new BorderLayout());
-            jp.repaint();
-            jp.add(new JRViewer(print));
-            jp.revalidate();
         } catch (JRException ex) {
-            Logger.getLogger(DaoLaporan.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return print;
     }
-
-    @Override
-    public JasperPrint cetakSkripsi(JPanel jp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public JasperPrint cetakAnggota(JPanel jp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public JasperPrint laporanPeminjamanTerbanyak(JPanel jp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public JasperPrint laporanPeminjaman(String no) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public JasperPrint cetakBukuCari(JPanel jp, String s, String k) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public JasperPrint cetakSkripsiCari(JPanel jp, String s, String k) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public JasperPrint cetakAnggotaCari(JPanel jp, String s, String k) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

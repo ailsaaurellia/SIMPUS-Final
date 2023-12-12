@@ -325,7 +325,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
                 .addGap(47, 47, 47)
                 .addComponent(jLabel11)
                 .addGap(27, 27, 27)
-                .addComponent(tf_tKembali, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                .addComponent(tf_tKembali, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
                 .addGap(22, 22, 22))
         );
         jPanel2Layout.setVerticalGroup(
@@ -520,9 +520,9 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
                     .addGroup(tambahDataLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel6)
-                        .addGap(0, 891, Short.MAX_VALUE))
+                        .addGap(0, 703, Short.MAX_VALUE))
                     .addGroup(tambahDataLayout.createSequentialGroup()
-                        .addContainerGap(1300, Short.MAX_VALUE)
+                        .addContainerGap(1112, Short.MAX_VALUE)
                         .addComponent(btn_simpan)
                         .addGap(18, 18, 18)
                         .addComponent(btn_batal)))
@@ -538,7 +538,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tambahDataLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 610, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 598, Short.MAX_VALUE)
                 .addGroup(tambahDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -648,7 +648,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
         } else if (btn_simpan.getText().equals("SIMPAN")) {
             insertData();
         } else if (btn_simpan.getText().equals("UBAH")) {
-//            updateData();
+            updateData();
         }
     }//GEN-LAST:event_btn_simpanActionPerformed
 
@@ -766,7 +766,14 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
 
     private void kosongkanForm() {
         tf_no.setText("");
-
+        tf_tPinjam.setText("");
+        tf_tKembali.setText("");
+        tf_idAng.setText("");
+        tf_nama.setText("");
+        cb_status.setSelectedIndex(0);
+        cb_ang.setSelectedIndex(0);
+        tf_idBuku.setText("");
+        tf_judul.setText("");
     }
 
     private void setTabelModel() {
@@ -896,9 +903,6 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
         int row = jTablePengguna.getSelectedRow();
         jLabel6.setText("Perbarui Data Pengguna");
         tf_no.setEnabled(false);
-        tf_idAng.setEnabled(false);
-        tf_idBuku.setEnabled(false);
-
         tf_no.setText(jTablePengguna.getValueAt(row, 0).toString());
         tf_idAng.setText(jTablePengguna.getValueAt(row, 1).toString());
         tf_nama.setText(jTablePengguna.getValueAt(row, 2).toString());
@@ -910,6 +914,77 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
         cb_status.setSelectedItem(status);
         tf_tPinjam.setText(jTablePengguna.getValueAt(row, 7).toString());
         tf_tKembali.setText(jTablePengguna.getValueAt(row, 8).toString());
+        DefaultTableModel tblBukuModel = (DefaultTableModel) tbl_buku.getModel();
+        tblBukuModel.setRowCount(0);
+    }
+
+    private void updateData() {
+        String noPeminjaman = tf_no.getText().trim();
+        String tanggalPinjam = tf_tPinjam.getText();
+        String tanggalKembali = tf_tKembali.getText();
+        String idPengguna = tf_idAng.getText();
+        String namaPengguna = tf_nama.getText();
+        String statusPeminjaman = (String) cb_status.getSelectedItem();
+        String angkatan = (String) cb_ang.getSelectedItem();
+        String idBuku = tf_idBuku.getText();
+        String judulBuku = tf_judul.getText();
+
+        if (noPeminjaman.isEmpty() || tanggalPinjam.isEmpty() || tanggalKembali.isEmpty() || idPengguna.isEmpty() || namaPengguna.isEmpty() || statusPeminjaman.isEmpty() || angkatan.isEmpty() || idBuku.isEmpty() || judulBuku.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Semua kolom harus diisi", "Validasi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        EntityManager em = Persistence.createEntityManagerFactory("UASPBOPU").createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            // Periksa apakah PeminjamanBuku dengan nomor peminjaman tertentu sudah ada
+            PeminjamanBuku peminjamanBuku = em.find(PeminjamanBuku.class, noPeminjaman);
+
+            if (peminjamanBuku != null) {
+                // Update data yang diperlukan
+                peminjamanBuku.setTanggalPinjam(tanggalPinjam);
+                peminjamanBuku.setTanggalKembali(tanggalKembali);
+                peminjamanBuku.setStatusPeminjaman(statusPeminjaman);
+                peminjamanBuku.setAngkatan(angkatan);
+
+                // Periksa apakah Pengguna dengan ID tertentu sudah ada, jika tidak, Anda mungkin perlu membuatnya terlebih dahulu
+                Pengguna pengguna = em.find(Pengguna.class, idPengguna);
+                if (pengguna == null) {
+                    // Jika tidak ditemukan, Anda mungkin perlu membuat Pengguna baru terlebih dahulu
+                    // Sesuaikan dengan atribut Pengguna yang sebenarnya
+                    pengguna = new Pengguna();
+                    pengguna.setIdPengguna(idPengguna);
+                    pengguna.setNama(namaPengguna);
+                    em.persist(pengguna);
+                }
+
+                // Update data Pengguna
+                peminjamanBuku.setNama(namaPengguna);
+
+                // Set objek PeminjamanBukuPK
+                PeminjamanBukuPK peminjamanPK = peminjamanBuku.getPeminjamanBukuPK();
+                peminjamanPK.setIdBuku(idBuku); // Tambahkan ini untuk mengatur idBuku
+
+                em.getTransaction().commit();
+
+                JOptionPane.showMessageDialog(this, "Data Peminjaman Buku Berhasil Diupdate", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Data Peminjaman Buku dengan Nomor Peminjaman " + noPeminjaman + " tidak ditemukan", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            em.getTransaction().rollback();
+            JOptionPane.showMessageDialog(this, "Data Gagal Diupdate: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            em.close();
+        }
+
+        kosongkanForm();
+        loadData();
+        showPanel();
     }
 
     private String setNoPeminjaman() {
@@ -941,4 +1016,5 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
     private void hapusData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }
