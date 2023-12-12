@@ -569,7 +569,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
     }//GEN-LAST:event_btTambahActionPerformed
 
     private void btHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHapusActionPerformed
-        String s = (String) jTablePinjam.getValueAt(jTablePinjam.getSelectedRow(), 1);
+        String no = (String) jTablePinjam.getValueAt(jTablePinjam.getSelectedRow(), 0);
         ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/hapus.png"));
         hapusData();
         loadData();
@@ -965,7 +965,8 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
 
                 // Set objek PeminjamanBukuPK
                 PeminjamanBukuPK peminjamanPK = peminjamanBuku.getPeminjamanBukuPK();
-                peminjamanPK.setIdBuku(idBuku); // Tambahkan ini untuk mengatur idBuku
+                peminjamanPK.setNoPeminjaman(noPeminjaman);
+                peminjamanPK.setIdBuku(idBuku);
 
                 em.getTransaction().commit();
 
@@ -1019,23 +1020,32 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
                 "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            String no = tf_no.getText().trim();
+            String no = (String) jTablePinjam.getValueAt(selectedRow, 0);
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("UASPBOPU");
             EntityManager em = emf.createEntityManager();
             try {
                 em.getTransaction().begin();
+
+                // Ambil objek PeminjamanBuku sesuai dengan kunci gabungan
                 PeminjamanBukuPK peminjamanPK = new PeminjamanBukuPK();
                 peminjamanPK.setNoPeminjaman(no);
-                em.remove(peminjamanPK);
-                em.getTransaction().commit();
+                PeminjamanBuku peminjamanBuku = em.find(PeminjamanBuku.class, peminjamanPK);
 
-                JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
+                // Hapus objek PeminjamanBuku
+                if (peminjamanBuku != null) {
+                    em.remove(peminjamanBuku); // Menggunakan entity instance untuk menghapus
+                    em.getTransaction().commit();
+                    JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Data dengan Nomor Peminjaman " + no + " tidak ditemukan", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } catch (Exception e) {
                 em.getTransaction().rollback();
-                JOptionPane.showMessageDialog(this, "Data Gagal Dihapus");
+                JOptionPane.showMessageDialog(this, "Data Gagal Dihapus: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             } finally {
                 em.close();
             }
+
             kosongkanForm();
             loadData();
             showPanel();

@@ -575,7 +575,7 @@ public class FormPengguna1 extends javax.swing.JPanel {
     }//GEN-LAST:event_btTambahActionPerformed
 
     private void btHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHapusActionPerformed
-        String s = (String) jTablePengguna.getValueAt(jTablePengguna.getSelectedRow(), 1);
+        String s = (String) jTablePengguna.getValueAt(jTablePengguna.getSelectedRow(), 0);
         ImageIcon icon = new ImageIcon(getClass().getResource("/gambar/hapus.png"));
         hapusData();
         loadData();
@@ -1014,7 +1014,7 @@ public class FormPengguna1 extends javax.swing.JPanel {
                 "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            String id = tf_id.getText().trim();
+            String id = (String) jTablePengguna.getValueAt(selectedRow, 0);
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("UASPBOPU");
             EntityManager em = emf.createEntityManager();
             try {
