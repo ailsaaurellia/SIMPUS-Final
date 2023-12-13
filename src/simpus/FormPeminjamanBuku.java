@@ -39,6 +39,8 @@ import persisten.Pengguna;
  */
 public class FormPeminjamanBuku extends javax.swing.JPanel {
 
+    private Buku mod = new Buku();
+
     ArrayList<Pengguna> Pengguna;
 
     public FormPeminjamanBuku() {
@@ -563,7 +565,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
 
         tf_no.setText(setNoPeminjaman());
         if (btTambah.getText().equals("UBAH")) {
-            dataTabel();
+            dataTabel(mod);
             btn_simpan.setText("UBAH");
         }
     }//GEN-LAST:event_btTambahActionPerformed
@@ -765,16 +767,21 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
     }
 
     private void kosongkanForm() {
-        tf_no.setText("");
-        tf_tPinjam.setText("");
-        tf_tKembali.setText("");
-        tf_idAng.setText("");
-        tf_nama.setText("");
-        cb_status.setSelectedIndex(0);
-        cb_ang.setSelectedIndex(0);
-        tf_idBuku.setText("");
-        tf_judul.setText("");
-    }
+    tf_no.setText("");
+    tf_tPinjam.setText("");
+    tf_tKembali.setText("");
+    tf_idAng.setText("");
+    tf_nama.setText("");
+    cb_status.setSelectedIndex(0);
+    cb_ang.setSelectedIndex(0);
+    tf_idBuku.setText("");
+    tf_judul.setText("");
+
+    // Tambahan untuk mengosongkan tabel buku
+    DefaultTableModel tbl = (DefaultTableModel) tbl_buku.getModel();
+    tbl.setRowCount(0);
+}
+
 
     private void setTabelModel() {
         DefaultTableModel model = (DefaultTableModel) jTablePinjam.getModel();
@@ -850,22 +857,13 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
 
         try {
             em.getTransaction().begin();
-
-            // Periksa apakah Pengguna dengan ID tertentu sudah ada, jika tidak, Anda mungkin perlu membuatnya terlebih dahulu
             Pengguna pengguna = em.find(Pengguna.class, idPengguna);
             if (pengguna == null) {
-                // Jika tidak ditemukan, Anda mungkin perlu membuat Pengguna baru terlebih dahulu
-                // Sesuaikan dengan atribut Pengguna yang sebenarnya
                 pengguna = new Pengguna();
                 pengguna.setIdPengguna(idPengguna);
-                pengguna.setNama(namaPengguna);
                 em.persist(pengguna);
             }
-
-            // Buat objek PeminjamanBuku
             PeminjamanBuku peminjamanBuku = new PeminjamanBuku();
-
-            // Buat objek PeminjamanBukuPK
             PeminjamanBukuPK peminjamanPK = new PeminjamanBukuPK(noPeminjaman, idPengguna, idBuku);
             peminjamanBuku.setPeminjamanBukuPK(peminjamanPK);
 
@@ -896,7 +894,7 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
         showPanel();
     }
 
-    private void dataTabel() {
+    private void dataTabel(Buku mod) {
         mainPanel.setVisible(false);
         tambahData.setVisible(true);
 
@@ -914,8 +912,16 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
         cb_status.setSelectedItem(status);
         tf_tPinjam.setText(jTablePinjam.getValueAt(row, 7).toString());
         tf_tKembali.setText(jTablePinjam.getValueAt(row, 8).toString());
-        DefaultTableModel tblBukuModel = (DefaultTableModel) tbl_buku.getModel();
-        tblBukuModel.setRowCount(0);
+        DefaultTableModel tbl = (DefaultTableModel) tbl_buku.getModel();
+        if (mod.getPeminjamanBukuCollection() != null) {
+            for (PeminjamanBuku data : mod.getPeminjamanBukuCollection()) {
+                Buku buku = data.getBuku();
+                if (buku != null) {
+                    // Sesuaikan dengan atribut yang ingin Anda tampilkan di tabel
+                    tbl.addRow(new Object[]{buku.getIdBuku(), buku.getIsbn(), buku.getJudul(), buku.getPengarang(), buku.getTahun()});
+                }
+            }
+        }
     }
 
     private void updateData() {
@@ -934,39 +940,36 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
             return;
         }
 
-        EntityManager em = Persistence.createEntityManagerFactory("UASPBOPU").createEntityManager();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("UASPBOPU");
+        EntityManager em = emf.createEntityManager();
 
         try {
             em.getTransaction().begin();
 
-            // Periksa apakah PeminjamanBuku dengan nomor peminjaman tertentu sudah ada
-            PeminjamanBuku peminjamanBuku = em.find(PeminjamanBuku.class, noPeminjaman);
+            // Buat instance dari PeminjamanBukuPK
+            PeminjamanBukuPK peminjamanPK = new PeminjamanBukuPK(noPeminjaman, idPengguna, idBuku);
+
+            // Gunakan PeminjamanBukuPK sebagai parameter untuk metode find
+            PeminjamanBuku peminjamanBuku = em.find(PeminjamanBuku.class, peminjamanPK);
 
             if (peminjamanBuku != null) {
-                // Update data yang diperlukan
                 peminjamanBuku.setTanggalPinjam(tanggalPinjam);
                 peminjamanBuku.setTanggalKembali(tanggalKembali);
                 peminjamanBuku.setStatusPeminjaman(statusPeminjaman);
                 peminjamanBuku.setAngkatan(angkatan);
 
-                // Periksa apakah Pengguna dengan ID tertentu sudah ada, jika tidak, Anda mungkin perlu membuatnya terlebih dahulu
                 Pengguna pengguna = em.find(Pengguna.class, idPengguna);
                 if (pengguna == null) {
-                    // Jika tidak ditemukan, Anda mungkin perlu membuat Pengguna baru terlebih dahulu
-                    // Sesuaikan dengan atribut Pengguna yang sebenarnya
                     pengguna = new Pengguna();
                     pengguna.setIdPengguna(idPengguna);
                     pengguna.setNama(namaPengguna);
                     em.persist(pengguna);
                 }
 
-                // Update data Pengguna
                 peminjamanBuku.setNama(namaPengguna);
 
                 // Set objek PeminjamanBukuPK
-                PeminjamanBukuPK peminjamanPK = peminjamanBuku.getPeminjamanBukuPK();
-                peminjamanPK.setNoPeminjaman(noPeminjaman);
-                peminjamanPK.setIdBuku(idBuku);
+                peminjamanBuku.setPeminjamanBukuPK(peminjamanPK);
 
                 em.getTransaction().commit();
 
@@ -980,12 +983,13 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
             em.getTransaction().rollback();
             JOptionPane.showMessageDialog(this, "Data Gagal Diupdate: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
-            em.close();
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+            kosongkanForm();
+            loadData();
+            showPanel();
         }
-
-        kosongkanForm();
-        loadData();
-        showPanel();
     }
 
     private String setNoPeminjaman() {
@@ -1016,32 +1020,43 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
 
     private void hapusData() {
         int selectedRow = jTablePinjam.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih baris yang akan dihapus", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         int confirm = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin menghapus data?",
                 "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            String no = (String) jTablePinjam.getValueAt(selectedRow, 0);
+            String noPeminjaman = (String) jTablePinjam.getValueAt(selectedRow, 0);
+            String idPengguna = (String) jTablePinjam.getValueAt(selectedRow, 1);
+            String idBuku = (String) jTablePinjam.getValueAt(selectedRow, 4);
+
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("UASPBOPU");
             EntityManager em = emf.createEntityManager();
+
             try {
                 em.getTransaction().begin();
 
-                // Ambil objek PeminjamanBuku sesuai dengan kunci gabungan
-                PeminjamanBukuPK peminjamanPK = new PeminjamanBukuPK();
-                peminjamanPK.setNoPeminjaman(no);
+                // Buat objek PeminjamanBukuPK berdasarkan kunci gabungan
+                PeminjamanBukuPK peminjamanPK = new PeminjamanBukuPK(noPeminjaman, idPengguna, idBuku);
+
+                // Temukan objek PeminjamanBuku sesuai dengan kunci gabungan
                 PeminjamanBuku peminjamanBuku = em.find(PeminjamanBuku.class, peminjamanPK);
 
-                // Hapus objek PeminjamanBuku
                 if (peminjamanBuku != null) {
-                    em.remove(peminjamanBuku); // Menggunakan entity instance untuk menghapus
+                    // Hapus objek yang telah ditemukan
+                    em.remove(peminjamanBuku);
                     em.getTransaction().commit();
                     JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
                 } else {
-                    JOptionPane.showMessageDialog(this, "Data dengan Nomor Peminjaman " + no + " tidak ditemukan", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Data dengan Nomor Peminjaman " + noPeminjaman + " tidak ditemukan", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 }
+
             } catch (Exception e) {
                 em.getTransaction().rollback();
-                JOptionPane.showMessageDialog(this, "Data Gagal Dihapus: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Data Gagal Dihapus");
             } finally {
                 em.close();
             }
@@ -1053,3 +1068,4 @@ public class FormPeminjamanBuku extends javax.swing.JPanel {
     }
 
 }
+

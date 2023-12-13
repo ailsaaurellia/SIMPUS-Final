@@ -1008,34 +1008,44 @@ public class FormPengguna1 extends javax.swing.JPanel {
         }
     }
 
-    private void hapusData() {
-        int selectedRow = jTablePengguna.getSelectedRow();
-        int confirm = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin menghapus data?",
-                "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION);
+   private void hapusData() {
+    int selectedRow = jTablePengguna.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Pilih baris yang akan dihapus", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-        if (confirm == JOptionPane.YES_OPTION) {
-            String id = (String) jTablePengguna.getValueAt(selectedRow, 0);
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("UASPBOPU");
-            EntityManager em = emf.createEntityManager();
-            try {
-                em.getTransaction().begin();
-                Pengguna p = new Pengguna();
-                p.setIdPengguna(id);
+    int confirm = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin menghapus data?",
+            "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        String id = (String) jTablePengguna.getValueAt(selectedRow, 0);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("UASPBOPU");
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Pengguna p = em.find(Pengguna.class, id);
+
+            if (p != null) {
                 em.remove(p);
                 em.getTransaction().commit();
-
                 JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
-            } catch (Exception e) {
-                em.getTransaction().rollback();
-                JOptionPane.showMessageDialog(this, "Data Gagal Dihapus");
-            } finally {
-                em.close();
+            } else {
+                JOptionPane.showMessageDialog(this, "Data dengan ID " + id + " tidak ditemukan", "Peringatan", JOptionPane.WARNING_MESSAGE);
             }
-            kosongkanForm();
-            loadData();
-            showPanel();
+
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            JOptionPane.showMessageDialog(this, "Data Gagal Dihapus");
+        } finally {
+            em.close();
         }
+        kosongkanForm();
+        loadData();
+        showPanel();
     }
+}
+
 
     private void searchData() {
         try {
