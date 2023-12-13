@@ -246,15 +246,22 @@ public class GUIUtama extends javax.swing.JFrame {
                 pnUtama.revalidate();
             }
         });
-        MenuItem menuPinjamB = new MenuItem(null, true, IconBuku, "Pinjam Buku", new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        MenuItem menuPinjamB = new MenuItem(null, true, IconBuku, "Pinjam Buku",new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
                 pnUtama.removeAll();
                 pnUtama.add(new FormPeminjamanBuku());
                 pnUtama.repaint();
                 pnUtama.revalidate();
             }
         });
-        MenuItem menuPinjamS = new MenuItem(null, true, IconSkripsi, "Pinjam Skripsi", null);
+        MenuItem menuPinjamS = new MenuItem(null, true, IconSkripsi, "Pinjam Skripsi",new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                pnUtama.removeAll();
+                pnUtama.add(new FormPeminjamanSkripsi());
+                pnUtama.repaint();
+                pnUtama.revalidate();
+            }
+        });
         MenuItem menuLBuku = new MenuItem(null, true, IconBuku, "Buku", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 pnUtama.removeAll();
@@ -263,7 +270,14 @@ public class GUIUtama extends javax.swing.JFrame {
                 pnUtama.revalidate();
             }
         });
-        MenuItem menuLSkripsi = new MenuItem(null, true, IconSkripsi, "Skripsi", null);
+        MenuItem menuLSkripsi = new MenuItem(null, true, IconSkripsi, "Skripsi",new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                pnUtama.removeAll();
+                pnUtama.add(new FormLaporanSkripsi());
+                pnUtama.repaint();
+                pnUtama.revalidate();
+            }
+        });
         MenuItem menuPBuku = new MenuItem(null, true, IconBuku, "Buku", null);
         MenuItem menuPSkripsi = new MenuItem(null, true, IconSkripsi, "Skripsi", null);
 

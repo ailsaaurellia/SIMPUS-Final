@@ -205,7 +205,7 @@ public class DaoSkripsi implements IFSkripsi {
 
     @Override
     public List<Skripsi> getByKategori(String kategori) {
-        List<Kategori> kat = new DaoKategori().getByKategori(kategori);
+       List<Kategori> kat = new DaoKategori().getByKategori(kategori);
         List<Skripsi> list = new ArrayList();
         for(Kategori k : kat){
             for(Skripsi b: k.getSkripsiCollection()){

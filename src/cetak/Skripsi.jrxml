@@ -1,99 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6fea1893-5592-464b-83dc-799ede81107d">
-	<property name="ireport.zoom" value="1.6105100000000105"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3550e17d-07cb-4465-924f-9bd50762f997">
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
-	<parameter name="searchBy" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
+	<property name="ireport.y" value="0"/>
 	<parameter name="querySearch" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<queryString>
-		<![CDATA[select * from buku]]>
+	<parameter name="searchBy" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select * from skripsi]]>
 	</queryString>
-	<field name="idBuku" class="java.lang.String"/>
-	<field name="isbn" class="java.lang.String"/>
+	<field name="idSkripsi" class="java.lang.String"/>
 	<field name="judul" class="java.lang.String"/>
-	<field name="pengarang" class="java.lang.String"/>
-	<field name="penerbit" class="java.lang.String"/>
+	<field name="bahasa" class="java.lang.String"/>
+	<field name="fakultas" class="java.lang.String"/>
+	<field name="programStudi" class="java.lang.String"/>
 	<field name="tahun" class="java.lang.String"/>
-	<field name="halaman" class="java.lang.String"/>
+	<field name="penulis" class="java.lang.String"/>
+	<field name="pembimbing" class="java.lang.String"/>
+	<field name="jumlahHalaman" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="94" splitType="Stretch">
-			<image>
-				<reportElement x="113" y="24" width="106" height="26" uuid="587a571d-8751-4fa6-a904-0306315b2376"/>
-				<imageExpression><![CDATA["C:\\Users\\Ailsa\\Downloads\\Si MPus.jpg"]]></imageExpression>
-			</image>
+		<band height="89" splitType="Stretch">
+			<line>
+				<reportElement x="87" y="81" width="567" height="1" uuid="a633b5f8-657b-4f37-9c61-7ae361d92d52"/>
+			</line>
 			<staticText>
-				<reportElement x="334" y="6" width="198" height="18" uuid="78c56f17-b252-4874-94b9-3955a50b2bca"/>
-				<textElement>
-					<font size="13" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Sistem Manajemen Perpustakaan]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="252" y="23" width="371" height="23" uuid="ed2ca7c4-d094-4ad7-8929-6e59c72171b1"/>
-				<textElement>
-					<font size="16" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Universitas Islam Negeri Sunan Ampel Surabaya]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="269" y="46" width="331" height="24" uuid="4a3b57ff-76a4-462c-a134-f3b2f1ec055a"/>
+				<reportElement x="286" y="47" width="331" height="24" uuid="f490425c-f07e-43a0-b5d5-f6b8dc21f370"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Kampus 1 : Jl. Ahmad Yani, Kecamatan Wonocolo No. 117, Surabaya
 Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></text>
 			</staticText>
-			<line>
-				<reportElement x="70" y="80" width="567" height="1" uuid="a6f3fe83-3ee6-4fa2-ba1c-777ffd51da67"/>
-			</line>
+			<image>
+				<reportElement x="130" y="25" width="106" height="26" uuid="91db6cad-22af-4d16-a963-ea5c609e2a10"/>
+				<imageExpression><![CDATA["C:\\Users\\Ailsa\\Downloads\\Si MPus.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="351" y="7" width="198" height="18" uuid="a5238fbd-c8b3-4b21-8d54-220c5dc41752"/>
+				<textElement>
+					<font size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Sistem Manajemen Perpustakaan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="24" width="371" height="23" uuid="8762b373-79ca-427c-9c75-1afce027a8f9"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Universitas Islam Negeri Sunan Ampel Surabaya]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="84" splitType="Stretch">
-			<textField>
-				<reportElement x="543" y="16" width="80" height="17" uuid="b7b95a67-b217-4dcc-ad39-fdf98992ae18"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
+		<band height="98" splitType="Stretch">
 			<staticText>
-				<reportElement x="487" y="16" width="63" height="17" uuid="93497371-ac08-4a6a-9ded-4d5b8fbcfbdb"/>
+				<reportElement x="561" y="18" width="63" height="17" uuid="5d6e4950-7a1c-435b-b294-686688afae72"/>
 				<textElement>
 					<font size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Surabaya,]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="186" y="52" width="83" height="30" uuid="ea252a09-9029-4d17-8238-767f3bcc1228">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle">
-					<font fontName="Arial" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{searchBy}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="334" y="16" width="98" height="23" uuid="46fb1225-7fa7-424e-a1e1-bd4bee85793d"/>
+				<reportElement x="332" y="18" width="189" height="23" uuid="6a62be80-ad52-4a5b-88c6-d04b8a1d75a8"/>
 				<textElement>
 					<font size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Data Buku Kampus]]></text>
+				<text><![CDATA[Data Skripsi Kampus]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="81" y="52" width="105" height="30" uuid="9dbcc095-5670-471f-a3fd-185d4fb3794d">
+				<reportElement x="81" y="68" width="105" height="30" uuid="d3f9e3dc-2b07-45f0-b033-b86ea356def6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
 				</reportElement>
 				<box>
@@ -108,12 +89,33 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 				</textElement>
 				<textFieldExpression><![CDATA[$P{querySearch}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="617" y="18" width="80" height="17" uuid="763edf0f-d1d6-4ae3-bc28-dd0304b8b9b9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="186" y="68" width="83" height="30" uuid="bedda3b0-4210-4512-ac03-2e873c4a6ac0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{searchBy}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="61" splitType="Stretch">
 			<staticText>
-				<reportElement x="351" y="31" width="94" height="30" forecolor="#000000" backcolor="#FF9999" uuid="e431bfd5-b5e6-4b5e-94c8-79a8eb71e84d">
+				<reportElement x="363" y="31" width="95" height="30" forecolor="#000000" backcolor="#FF9999" uuid="bd052b17-a35a-4c13-a6e6-b83c91d1231b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
 				</reportElement>
 				<box>
@@ -126,10 +128,10 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Pengarang]]></text>
+				<text><![CDATA[Program Studi]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="445" y="31" width="95" height="30" forecolor="#000000" backcolor="#FF9999" uuid="c49b49b0-5fdc-4ab1-a5df-1427551f4cef">
+				<reportElement x="269" y="31" width="94" height="30" forecolor="#000000" backcolor="#FF9999" uuid="8b2648cb-5530-46ad-b597-44db3314dcd6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
 				</reportElement>
 				<box>
@@ -142,58 +144,10 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Penerbit]]></text>
+				<text><![CDATA[Fakultas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="146" y="31" width="104" height="30" forecolor="#000000" backcolor="#FF9999" uuid="801512e5-465f-437d-b8d9-0a121782300b">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ISBN]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="540" y="31" width="97" height="30" forecolor="#000000" backcolor="#FF9999" uuid="6bff623a-6f69-467d-ae91-1938dee85263">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Tahun]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="41" y="31" width="105" height="30" forecolor="#000000" uuid="4ae31fa6-2c50-4bdf-b330-b2d3e97c49d0">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="47091bc6-54e4-4fc3-9c53-7995e34d3d19"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ID Buku]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="250" y="31" width="101" height="30" forecolor="#000000" backcolor="#FF9999" uuid="f9a57469-42c6-471c-b8f4-1966766ac506">
+				<reportElement x="105" y="31" width="81" height="30" forecolor="#000000" backcolor="#FF9999" uuid="07dcdf1d-51f8-468e-8a99-b05c2ad71a89">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
 				</reportElement>
 				<box>
@@ -209,7 +163,71 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 				<text><![CDATA[Judul]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="637" y="31" width="136" height="30" forecolor="#000000" backcolor="#FF9999" uuid="0291c06e-90de-4045-9a8c-2a0754243ebb">
+				<reportElement x="186" y="31" width="83" height="30" forecolor="#000000" backcolor="#FF9999" uuid="e7e72093-91f0-4e70-b273-e3651c9188d3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bahasa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="31" width="76" height="30" forecolor="#000000" backcolor="#FF9999" uuid="244378fd-eae7-4af8-9f07-5bada72281d3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tahun]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="31" width="105" height="30" forecolor="#000000" uuid="77ec3225-3f94-43c8-a19c-2c64d7602e45">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="47091bc6-54e4-4fc3-9c53-7995e34d3d19"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Skripsi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="617" y="31" width="79" height="30" forecolor="#000000" backcolor="#FF9999" uuid="0d4c9c4c-b0fa-4faa-a1e1-f72e82462931">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pembimbing]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="696" y="31" width="106" height="30" forecolor="#000000" backcolor="#FF9999" uuid="eb0eb7b8-299e-4f41-8d29-fc1439c64da0">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
 				</reportElement>
 				<box>
@@ -224,12 +242,28 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 				</textElement>
 				<text><![CDATA[Jumlah Halaman]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="534" y="31" width="83" height="30" forecolor="#000000" backcolor="#FF9999" uuid="ab29d860-8287-44aa-8df8-b9a8087f743a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Penulis]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="125" splitType="Stretch">
 			<textField>
-				<reportElement x="146" y="0" width="104" height="30" uuid="4a84d1bc-b307-48f8-99c7-5209d49a2fee">
+				<reportElement x="0" y="0" width="105" height="30" uuid="e59bd244-1d70-4b4a-8fe8-ce2eda300c62">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
 				</reportElement>
 				<box>
@@ -242,26 +276,10 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{isbn}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{idSkripsi}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="41" y="0" width="105" height="30" uuid="fa53d049-8ab3-45d7-bba3-7e8c33762c34">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{idBuku}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="250" y="0" width="101" height="30" uuid="cb84efe9-5562-4585-b07b-2dd2d43dd984">
+				<reportElement x="105" y="0" width="81" height="30" uuid="e7b2fc9f-bbd9-4949-98b2-82156f5e5535">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
 				</reportElement>
 				<box>
@@ -277,7 +295,7 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 				<textFieldExpression><![CDATA[$F{judul}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="351" y="0" width="94" height="30" uuid="75edb05d-9f96-4d01-80d5-4afe6e6f0cdf">
+				<reportElement x="186" y="0" width="83" height="30" uuid="e0c2b79c-7d51-4cf8-97b8-45ea8e74acc0">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
 				</reportElement>
 				<box>
@@ -290,10 +308,10 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pengarang}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bahasa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="445" y="0" width="95" height="30" uuid="794f1894-482e-4760-a8d8-1c9a298a2534">
+				<reportElement x="269" y="0" width="94" height="30" uuid="46d6cf90-5a97-418a-8d01-1795336ef683">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
 				</reportElement>
 				<box>
@@ -306,10 +324,26 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{penerbit}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fakultas}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="540" y="0" width="97" height="30" uuid="59e235b5-7054-4f80-8723-eb8b62a3f6ea">
+				<reportElement x="363" y="0" width="95" height="30" uuid="094a77d3-f961-42db-bed2-46e98cfd5dd4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{programStudi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="458" y="0" width="76" height="30" uuid="f244f58b-e4a1-4e0b-9a38-18bc28e4085c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
 				</reportElement>
 				<box>
@@ -325,7 +359,7 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 				<textFieldExpression><![CDATA[$F{tahun}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="637" y="0" width="136" height="30" uuid="8f0f3fc1-6e46-407b-9a52-8d832c6cd745">
+				<reportElement x="617" y="0" width="79" height="30" uuid="9e118b9c-d503-46ea-be73-cecbb1bf056d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
 				</reportElement>
 				<box>
@@ -338,7 +372,39 @@ Kampus 2 : Jl. Ir. H. Soekarno, Kecamatan Gunung Anyar, No. 682., Surabaya]]></t
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{halaman}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{pembimbing}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="696" y="0" width="106" height="30" uuid="2ca7421d-c245-42e4-992b-750eb7cc74df">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jumlahHalaman}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="534" y="0" width="83" height="30" uuid="b5d16fac-3cd0-4ab5-a7cb-06da41512c67">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd426237-0004-441f-9852-2b42612e40fe"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{penulis}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
